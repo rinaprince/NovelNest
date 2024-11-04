@@ -1,0 +1,11 @@
+/* Estils personalitzats */
+
+/* Font principal per a la pàgina */
+@font-face {
+    font-family: 'Montserrat';
+    src: url("../css/fonts/Montserrat-Regular.ttf");
+}
+
+*{
+    font-family: 'Montserrat', sans-serif;
+}
