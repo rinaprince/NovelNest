@@ -10,4 +10,60 @@
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 d-flex flex-column align-items-center">
+                <div class="col-4 text-center">
+                    <h3 class="fs-5 pb-3">¿Necesitas ayuda?</h3>
+                </div>
+
+                <div class="col-8">
+                    <p>Si tienes alguna de las siguientes dudas o problemas, rellena el formulario y te
+                        contestaremos:</p>
+                    <ol>
+                        <li>No entiendes cómo autopublicar.</li>
+                        <li>El pago no se ha procesado correctamente.</li>
+                        <li>No te ha llegado la factura.</li>
+                        <li>Te has equivocado con la cantidad de obras en el pedido.</li>
+                        <li>No has recibido tu pedido.</li>
+                    </ol>
+
+                    <p>O, si también necesitas pedir una revisión de la obra a los/as editores/as.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                {{ form_start(form) }}
+                <div class="col-6 mb-3">
+                    {{ form_label(form.nom, 'Nombre', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.nom) }}
+                </div>
+
+                <div class="col-6 mb-3">
+                    {{ form_label(form.cognom, 'Apellido', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.cognom, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.cognom) }}
+                </div>
+
+                <div class="col-6 mb-3">
+                    {{ form_label(form.correu, 'Correo Electrónico', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.correu, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.correu) }}
+                </div>
+
+                <div class="col-6 mb-3">
+                    {{ form_label(form.comentaris, 'Comentarios', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.comentaris, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.comentaris) }}
+                </div>
+
+                <div class="">
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-rosa'}}) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
