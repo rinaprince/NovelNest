@@ -20,6 +20,10 @@ class Client extends User
     #[ORM\Column(length: 255)]
     private ?string $num_tarj = null;
 
+    #[ORM\ManyToOne(inversedBy: 'autor')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Factura $id_Factura = null;
+
     public function getPseudonim(): ?string
     {
         return $this->pseudonim;
@@ -64,6 +68,18 @@ class Client extends User
     public function setNumTarj(string $num_tarj): static
     {
         $this->num_tarj = $num_tarj;
+
+        return $this;
+    }
+
+    public function getIdFactura(): ?Factura
+    {
+        return $this->id_Factura;
+    }
+
+    public function setIdFactura(?Factura $id_Factura): static
+    {
+        $this->id_Factura = $id_Factura;
 
         return $this;
     }
