@@ -10,6 +10,16 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+/* Font h2 */
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url("../css/fonts/Montserrat-Medium.ttf");
+}
+
+h2{
+    font-family: 'Montserrat-Medium', sans-serif;
+}
+
 /* Colors per a la web */
 
 .bg-blau{
