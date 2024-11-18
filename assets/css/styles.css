@@ -34,3 +34,17 @@
     background-color: #FDAFBF;
     border-color: #FDAFBF;
 }
+
+.btn-rosa:hover{
+    color: #000000;
+    background-color: #ff7b9c;
+    border-color: #ff7b9c;
+}
+
+/* Contacte */
+.logo-fons{
+    background-image: url("../media/img/logo.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
