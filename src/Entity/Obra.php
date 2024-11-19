@@ -19,9 +19,6 @@ class Obra
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $id_Arxiu = null;
-
     #[ORM\Column]
     private ?int $numObra_seguiment = null;
 
@@ -51,6 +48,16 @@ class Obra
         return $this;
     }
 
+    public function getTipus(): ?string
+    {
+        return $this->tipus;
+    }
+
+    public function setTipus(?string $tipus): void
+    {
+        $this->tipus = $tipus;
+    }
+
     public function getNom(): ?string
     {
         return $this->nom;
@@ -59,18 +66,6 @@ class Obra
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getIdArxiu(): ?string
-    {
-        return $this->id_Arxiu;
-    }
-
-    public function setIdArxiu(string $id_Arxiu): static
-    {
-        $this->id_Arxiu = $id_Arxiu;
 
         return $this;
     }
