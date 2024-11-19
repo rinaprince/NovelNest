@@ -16,9 +16,6 @@ class Factura
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $num_Factura = null;
-
     #[ORM\Column(length: 255)]
     private ?string $preu = null;
 
@@ -30,6 +27,10 @@ class Factura
      */
     #[ORM\OneToMany(targetEntity: Client::class, mappedBy: 'id_Factura')]
     private Collection $autor;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Obra $num_FacturaSeg = null;
 
     public function __construct()
     {
@@ -44,18 +45,6 @@ class Factura
     public function setId(int $id): static
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    public function getNumFactura(): ?int
-    {
-        return $this->num_Factura;
-    }
-
-    public function setNumFactura(int $num_Factura): static
-    {
-        $this->num_Factura = $num_Factura;
 
         return $this;
     }
@@ -110,6 +99,18 @@ class Factura
                 $autor->setIdFactura(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNumFacturaSeg(): ?Obra
+    {
+        return $this->num_FacturaSeg;
+    }
+
+    public function setNumFacturaSeg(Obra $num_FacturaSeg): static
+    {
+        $this->num_FacturaSeg = $num_FacturaSeg;
 
         return $this;
     }

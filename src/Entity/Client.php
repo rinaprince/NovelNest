@@ -3,13 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client extends User
 {
-    #[ORM\Column(length: 50)]
-    private ?string $pseudonim = null;
 
     #[ORM\Column(length: 50)]
     private ?string $telef = null;
@@ -24,16 +24,15 @@ class Client extends User
     #[ORM\JoinColumn(nullable: false)]
     private ?Factura $id_Factura = null;
 
-    public function getPseudonim(): ?string
-    {
-        return $this->pseudonim;
-    }
+    /**
+     * @var Collection<int, Obra>
+     */
+    #[ORM\OneToMany(targetEntity: Obra::class, mappedBy: 'pseudonim_client')]
+    private Collection $pseudonim;
 
-    public function setPseudonim(string $pseudonim): static
+    public function __construct()
     {
-        $this->pseudonim = $pseudonim;
-
-        return $this;
+        $this->pseudonim = new ArrayCollection();
     }
 
     public function getTelef(): ?string
@@ -80,6 +79,36 @@ class Client extends User
     public function setIdFactura(?Factura $id_Factura): static
     {
         $this->id_Factura = $id_Factura;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Obra>
+     */
+    public function getPseudonim(): Collection
+    {
+        return $this->pseudonim;
+    }
+
+    public function addPseudonim(Obra $pseudonim): static
+    {
+        if (!$this->pseudonim->contains($pseudonim)) {
+            $this->pseudonim->add($pseudonim);
+            $pseudonim->setPseudonimClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removePseudonim(Obra $pseudonim): static
+    {
+        if ($this->pseudonim->removeElement($pseudonim)) {
+            // set the owning side to null (unless already changed)
+            if ($pseudonim->getPseudonimClient() === $this) {
+                $pseudonim->setPseudonimClient(null);
+            }
+        }
 
         return $this;
     }

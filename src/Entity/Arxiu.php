@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArxiuRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArxiuRepository::class)]
@@ -14,10 +16,21 @@ class Arxiu
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $url_Arxiu = null;
+    private ?string $arxiu_pdf = null;
 
-    #[ORM\Column]
-    private ?int $id_Obra = null;
+    #[ORM\Column(length: 255)]
+    private ?string $arxiu_portada = null;
+
+    /**
+     * @var Collection<int, Obra>
+     */
+    #[ORM\OneToMany(targetEntity: Obra::class, mappedBy: 'url_arxiu')]
+    private Collection $num_Obra;
+
+    public function __construct()
+    {
+        $this->num_Obra = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -31,26 +44,56 @@ class Arxiu
         return $this;
     }
 
-    public function getUrlArxiu(): ?string
+    public function getArxiuPdf(): ?string
     {
-        return $this->url_Arxiu;
+        return $this->arxiu_pdf;
     }
 
-    public function setUrlArxiu(string $url_Arxiu): static
+    public function setArxiuPdf(string $arxiu_pdf): static
     {
-        $this->url_Arxiu = $url_Arxiu;
+        $this->arxiu_pdf = $arxiu_pdf;
 
         return $this;
     }
 
-    public function getIdObra(): ?int
+    public function getArxiuPortada(): ?string
     {
-        return $this->id_Obra;
+        return $this->arxiu_portada;
     }
 
-    public function setIdObra(int $id_Obra): static
+    public function setArxiuPortada(string $arxiu_portada): static
     {
-        $this->id_Obra = $id_Obra;
+        $this->arxiu_portada = $arxiu_portada;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Obra>
+     */
+    public function getNumObra(): Collection
+    {
+        return $this->num_Obra;
+    }
+
+    public function addNumObra(Obra $numObra): static
+    {
+        if (!$this->num_Obra->contains($numObra)) {
+            $this->num_Obra->add($numObra);
+            $numObra->setUrlArxiu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNumObra(Obra $numObra): static
+    {
+        if ($this->num_Obra->removeElement($numObra)) {
+            // set the owning side to null (unless already changed)
+            if ($numObra->getUrlArxiu() === $this) {
+                $numObra->setUrlArxiu(null);
+            }
+        }
 
         return $this;
     }

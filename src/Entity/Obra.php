@@ -20,19 +20,24 @@ class Obra
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $pseudonim_Client = null;
-
-    #[ORM\Column(length: 50)]
     private ?string $id_Arxiu = null;
 
     #[ORM\Column]
     private ?int $numObra_seguiment = null;
 
     #[ORM\Column]
-    private ?int $id_Factura = null;
-
-    #[ORM\Column]
     private ?bool $estat = null;
+
+    #[ORM\ManyToOne(inversedBy: 'pseudonim')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Client $pseudonim_client = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $portada = null;
+
+    #[ORM\ManyToOne(inversedBy: 'num_Obra')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Arxiu $url_arxiu = null;
 
     public function getId(): ?int
     {
@@ -46,18 +51,6 @@ class Obra
         return $this;
     }
 
-    public function getTipus(): ?string
-    {
-        return $this->tipus;
-    }
-
-    public function setTipus(string $tipus): static
-    {
-        $this->tipus = $tipus;
-
-        return $this;
-    }
-
     public function getNom(): ?string
     {
         return $this->nom;
@@ -66,18 +59,6 @@ class Obra
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPseudonimClient(): ?string
-    {
-        return $this->pseudonim_Client;
-    }
-
-    public function setPseudonimClient(string $pseudonim_Client): static
-    {
-        $this->pseudonim_Client = $pseudonim_Client;
 
         return $this;
     }
@@ -126,6 +107,42 @@ class Obra
     public function setEstat(bool $estat): static
     {
         $this->estat = $estat;
+
+        return $this;
+    }
+
+    public function getPseudonimClient(): ?Client
+    {
+        return $this->pseudonim_client;
+    }
+
+    public function setPseudonimClient(?Client $pseudonim_client): static
+    {
+        $this->pseudonim_client = $pseudonim_client;
+
+        return $this;
+    }
+
+    public function getPortada(): ?string
+    {
+        return $this->portada;
+    }
+
+    public function setPortada(string $portada): static
+    {
+        $this->portada = $portada;
+
+        return $this;
+    }
+
+    public function getUrlArxiu(): ?Arxiu
+    {
+        return $this->url_arxiu;
+    }
+
+    public function setUrlArxiu(?Arxiu $url_arxiu): static
+    {
+        $this->url_arxiu = $url_arxiu;
 
         return $this;
     }
