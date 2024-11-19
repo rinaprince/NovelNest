@@ -71,7 +71,7 @@ h2{
     color: #3b6db5;
 }
 
-/* Logo Home */
+/* Home */
 .logo{
     background-image: url("../css/img/logo.png");
     background-size: cover;
@@ -79,6 +79,15 @@ h2{
     background-position: center;
     width: 50%;
     height: 200px;
+}
+
+.bg-blau-oscur:hover{
+    background-color: #6A85B4;
+}
+
+.zoom:hover{
+    background-color: #6A85B4;
+    transform: scale(1.1);
 }
 
 /* Contacte */
