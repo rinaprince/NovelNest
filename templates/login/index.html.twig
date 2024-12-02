@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}Iniciar sesión{% endblock %}
 
 {% block body %}
     <div class="container d-flex justify-content-center py-5">
@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="container-fluid d-flex justify-content-center">
+    <div class="container d-flex justify-content-center">
         <div class="row">
             <div class="col-12">
                 {% if error %}
@@ -20,15 +20,22 @@
 
                 <form action="{{ path('app_login') }}" method="post">
                     <label for="username" class="mb-4"><strong>Nom de usuario:</strong></label>
-                    <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"><br>
+                    <input class="form-control" type="text" id="username" name="_username"
+                           value="{{ last_username }}"><br>
 
                     <label for="password" class="mb-4"><strong>Contraseña:</strong></label>
                     <input class="form-control" type="password" id="password" name="_password"> <br>
 
-                    <button type="submit" class="btn btn-outline-info">Entrar</button>
+                    <button type="submit" class="btn btn-outline-info text-center">Entrar</button>
                 </form>
+            </div>
+        </div>
+    </div>
 
-                <a href="#">¿No tienes una cuenta? ¡Regístrate aquí!</a>
+    <div class="container d-flex justify-content-center py-5">
+        <div class="row">
+            <div class="col-12">
+                <a href="#" class="mt-5">¿No tienes una cuenta? ¡Regístrate aquí!</a>
             </div>
         </div>
     </div>
