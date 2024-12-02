@@ -6,7 +6,7 @@ use App\Repository\ObraRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ObraRepository::class)]
-class Obra
+class Obra implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -140,5 +140,19 @@ class Obra
         $this->url_arxiu = $url_arxiu;
 
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            "id" => $this->getId(),
+            "tipus" => $this->getTipus(),
+            "nom" => $this->getNom(),
+            "num_obra_seguiment" => $this->getNumObraSeguiment(),
+            "estat" => $this->isEstat(),
+            "pseudonim_client" => $this->getPseudonimClient()?->getId(),
+            "portada" => $this->getPortada(),
+            "url_arxiu" => $this->getUrlArxiu()?->getId(),
+        ];
     }
 }

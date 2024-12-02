@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArxiuRepository::class)]
-class Arxiu
+class Arxiu implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -96,5 +96,13 @@ class Arxiu
         }
 
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return ["id" => $this->getId(),
+            "arxiu_pdf"=> $this->getArxiuPdf(),
+            "arxiu_portada" => $this->getArxiuPortada(),
+            "num_obra" => $this->getNumObra()];
     }
 }

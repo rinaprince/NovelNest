@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-class Client extends User
+class Client extends User implements \JsonSerializable
 {
 
     #[ORM\Column(length: 50)]
@@ -111,5 +111,17 @@ class Client extends User
         }
 
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            "id" => $this->getId(),
+            "telef" => $this->getTelef(),
+            "direccio" => $this->getDireccio(),
+            "num_tarj" => $this->getNumTarj(),
+            "id_factura" => $this->getIdFactura()?->getId(),
+            "pseudonim" => $this->getPseudonim()->map(fn($obra) => $obra->jsonSerialize())->toArray(),
+        ];
     }
 }

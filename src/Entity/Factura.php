@@ -9,7 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FacturaRepository::class)]
-class Factura
+class Factura implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -113,5 +113,16 @@ class Factura
         $this->num_FacturaSeg = $num_FacturaSeg;
 
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            "id" => $this->getId(),
+            "preu" => $this->getPreu(),
+            "data" => $this->getData()?->format('d/m/Y'),
+            "autor" => $this->getAutor()->map(fn($autor) => $autor->jsonSerialize())->toArray(),
+            "num_FacturaSeg" => $this->getNumFacturaSeg(),
+        ];
     }
 }
