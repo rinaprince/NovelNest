@@ -25,41 +25,41 @@ class UserFixtures extends Fixture
 
         // Crear usuario con rol ADMIN
         $admin = new Administrador();
-        $admin->setNomUsuari('admin')
-            ->setContrasenya(
-                $this->passwordHasher->hashPassword($admin, 'adminpass')
-            )
-            ->setNom($faker->firstName())
-            ->setCognom($faker->lastName())
-            ->setCorreu($faker->email())
-            ->setRols(['ROLE_ADMIN']);
+        $admin->setNomUsuari('admin');
+        $admin->setContrasenya(
+            $this->passwordHasher->hashPassword($admin, 'admin')
+        );
+        $admin->setNom($faker->firstName());
+        $admin->setCognom($faker->lastName());
+        $admin->setCorreu($faker->email());
+        $admin->setRols(['ROLE_ADMIN']);
         $manager->persist($admin);
 
         // Crear usuario con rol TREBALLADOR
-        $worker = new Treballador();
-        $worker->setNomUsuari('treballador')
-            ->setContrasenya(
-                $this->passwordHasher->hashPassword($worker, 'workerpass')
-            )
-            ->setNom($faker->firstName())
-            ->setCognom($faker->lastName())
-            ->setCorreu($faker->email())
-            ->setRols(['ROLE_TREBALLADOR']);
-        $manager->persist($worker);
+        $treballador = new Treballador();
+        $treballador->setNomUsuari('treballador');
+        $treballador->setContrasenya(
+            $this->passwordHasher->hashPassword($treballador, 'treballador')
+        );
+        $treballador->setNom($faker->firstName());
+        $treballador->setCognom($faker->lastName());
+        $treballador->setCorreu($faker->email());
+        $treballador->setRols(['ROLE_TREBALLADOR']);
+        $manager->persist($treballador);
 
         // Crear usuario con rol CLIENT
         $client = new Client();
-        $client->setNomUsuari('client')
-            ->setContrasenya(
-                $this->passwordHasher->hashPassword($client, 'clientpass')
-            )
-            ->setNom($faker->firstName())
-            ->setCognom($faker->lastName())
-            ->setCorreu($faker->email())
-            ->setRols(['ROLE_CLIENT'])
-            ->setTelef($faker->phoneNumber())
-            ->setDireccio($faker->address())
-            ->setNumTarj($faker->creditCardNumber());
+        $client->setNomUsuari('client');
+        $client->setContrasenya(
+            $this->passwordHasher->hashPassword($client, 'client')
+        );
+        $client->setNom($faker->firstName());
+        $client->setCognom($faker->lastName());
+        $client->setCorreu($faker->email());
+        $client->setRols(['ROLE_CLIENT']);
+        $client->setTelef($faker->phoneNumber());
+        $client->setDireccio($faker->address());
+        $client->setNumTarj($faker->creditCardNumber());
         $manager->persist($client);
 
         $manager->flush();
