@@ -3,8 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Factura;
-use App\Entity\Obra;
 use App\Entity\Client;
+use App\Entity\Obra;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -15,15 +15,19 @@ class FacturaFixtures extends Fixture
     {
         $faker = Factory::create();
 
+        //5 factures
         for ($i = 0; $i < 5; $i++) {
             $factura = new Factura();
-            $factura->setPreu($faker->randomNumber(2));
+            $factura->setPreu($faker->randomFloat(2, 100, 1000));
             $factura->setData($faker->dateTimeThisYear());
 
-            //Fent referència als clients en UserFixtures
+            //referència als clients en ClientsFixtures
             $client = $this->getReference('client_' . $i);
             $factura->addAutor($client);
 
+            //referència a obres en ObraFixtures
+            $obra = $this->getReference('obra_' . $i);
+            $factura->setNumFacturaSeg($obra);
 
             $manager->persist($factura);
         }
