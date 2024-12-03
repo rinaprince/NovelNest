@@ -51,10 +51,18 @@ class UserFixtures extends Fixture
         //rol CLIENT
         for ($i = 0; $i < 5; $i++) {
             $client = new Client();
-            $client->setNomUsuari('client');
-            $client->setContrasenya(
-                $this->passwordHasher->hashPassword($client, 'client')
-            );
+            $client->setNomUsuari('client' . ($i + 1));
+
+            //un client té una contr. client
+            if ($i == 0) {
+                $client->setContrasenya(
+                    $this->passwordHasher->hashPassword($client, 'client')
+                );
+            } else {
+                $client->setContrasenya(
+                    $this->passwordHasher->hashPassword($client, 'client' . ($i + 1))
+                );
+            }
             $client->setNom($faker->firstName());
             $client->setCognom($faker->lastName());
             $client->setCorreu($faker->email());
