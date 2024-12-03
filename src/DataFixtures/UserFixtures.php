@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Administrador;
+use App\Entity\Factura;
 use App\Entity\Treballador;
 use App\Entity\Client;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -48,20 +49,24 @@ class UserFixtures extends Fixture
         $manager->persist($treballador);
 
         //rol CLIENT
-        $client = new Client();
-        $client->setNomUsuari('client');
-        $client->setContrasenya(
-            $this->passwordHasher->hashPassword($client, 'client')
-        );
-        $client->setNom($faker->firstName());
-        $client->setCognom($faker->lastName());
-        $client->setCorreu($faker->email());
-        $client->setRols(['ROLE_CLIENT']);
-        $client->setTelef($faker->phoneNumber());
-        $client->setDireccio($faker->address());
-        $client->setNumTarj($faker->creditCardNumber());
-        $manager->persist($client);
+        for ($i = 0; $i < 5; $i++) {
+            $client = new Client();
+            $client->setNomUsuari('client');
+            $client->setContrasenya(
+                $this->passwordHasher->hashPassword($client, 'client')
+            );
+            $client->setNom($faker->firstName());
+            $client->setCognom($faker->lastName());
+            $client->setCorreu($faker->email());
+            $client->setRols(['ROLE_CLIENT']);
+            $client->setTelef($faker->phoneNumber());
+            $client->setDireccio($faker->address());
+            $client->setNumTarj($faker->creditCardNumber());
+            $manager->persist($client);
 
+            //Referència
+            $this->addReference('client_' . $i, $client);
+        }
         $manager->flush();
     }
 }
