@@ -123,12 +123,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getPassword(): ?string
     {
-        // TODO: Implement getPassword() method.
+        return $this->contrasenya;
     }
 
     public function getRoles(): array
     {
-        // TODO: Implement getRoles() method.
+        return $this->rols;
     }
 
     public function eraseCredentials()
