@@ -3,8 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Factura;
-use App\Entity\Client;
-use App\Entity\Obra;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -16,19 +14,21 @@ class FacturaFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create();
 
-        //5 factures
+        // Crear 5 factures
         for ($i = 0; $i < 5; $i++) {
             $factura = new Factura();
             $factura->setPreu($faker->randomFloat(2, 100, 1000));
             $factura->setData($faker->dateTimeThisYear());
 
-            //referència als clients en ClientsFixtures
+            //referència a un client
             $client = $this->getReference('client_' . $i);
-            $factura->addAutor($client);
+            $factura->setId($client);
 
-            //referència a obres en ObraFixtures
+            // Referència a una obra
             $obra = $this->getReference('obra_' . $i);
             $factura->setNumFacturaSeg($obra);
+
+            $this->addReference('factura_' . $i, $factura);
 
             $manager->persist($factura);
         }

@@ -5,11 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Arxiu;
 use App\Entity\Obra;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-class ArxiuFixtures extends Fixture implements DependentFixtureInterface
+class ArxiuFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -21,19 +20,12 @@ class ArxiuFixtures extends Fixture implements DependentFixtureInterface
             $arxiu->setArxiuPdf($faker->filePath);
             $arxiu->setArxiuPortada($faker->imageUrl(640, 480, 'business'));
 
-            $obra = $this->getReference('obra_' . $i);
-            $arxiu->addNumObra($obra);
+            //referència
+            $this->addReference('arxiu_' . $i, $arxiu);
 
             $manager->persist($arxiu);
         }
 
         $manager->flush();
-    }
-
-    public function getDependencies(): array
-    {
-        return [
-            ObraFixtures::class,
-        ];
     }
 }

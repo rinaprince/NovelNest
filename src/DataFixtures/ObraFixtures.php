@@ -3,8 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Obra;
-use App\Entity\Client;
-use App\Entity\Arxiu;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -16,7 +14,7 @@ class ObraFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create();
 
-        // Crear algunas obras
+        // Crear 5 obres
         for ($i = 0; $i < 5; $i++) {
             $obra = new Obra();
             $obra->setTipus($faker->word());
@@ -24,16 +22,15 @@ class ObraFixtures extends Fixture implements DependentFixtureInterface
             $obra->setNumObraSeguiment($faker->numberBetween(1, 1000));
             $obra->setEstat($faker->boolean());
 
-            //referència
-            $this->addReference('obra_' . $i, $obra);
-
-            //referència a un client
+            // Referència a un client
             $client = $this->getReference('client_' . $i);
             $obra->setPseudonimClient($client);
 
-            //referència a un arxiu
+            // Referència a un arxiu
             $arxiu = $this->getReference('arxiu_' . $i);
             $obra->setUrlArxiu($arxiu);
+
+            $this->addReference('obra_' . $i, $obra);
 
             $manager->persist($obra);
         }
@@ -45,6 +42,7 @@ class ObraFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
+            ArxiuFixtures::class,
         ];
     }
 }

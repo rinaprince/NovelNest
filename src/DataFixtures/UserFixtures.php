@@ -70,10 +70,11 @@ class UserFixtures extends Fixture
             $client->setTelef($faker->phoneNumber());
             $client->setDireccio($faker->address());
             $client->setNumTarj($faker->creditCardNumber());
-            $manager->persist($client);
 
-            //Referència
+            //referència
             $this->addReference('client_' . $i, $client);
+
+            $manager->persist($client);
 
         }
         $manager->flush();
