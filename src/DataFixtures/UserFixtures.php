@@ -23,7 +23,7 @@ class UserFixtures extends Fixture
     {
         $faker = Factory::create();
 
-        // Crear usuario con rol ADMIN
+        //rol ADMIN
         $admin = new Administrador();
         $admin->setNomUsuari('admin');
         $admin->setContrasenya(
@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
         $admin->setRols(['ROLE_ADMIN']);
         $manager->persist($admin);
 
-        // Crear usuario con rol TREBALLADOR
+        //rol TREBALLADOR
         $treballador = new Treballador();
         $treballador->setNomUsuari('treballador');
         $treballador->setContrasenya(
@@ -47,7 +47,7 @@ class UserFixtures extends Fixture
         $treballador->setRols(['ROLE_TREBALLADOR']);
         $manager->persist($treballador);
 
-        // Crear usuario con rol CLIENT
+        //rol CLIENT
         $client = new Client();
         $client->setNomUsuari('client');
         $client->setContrasenya(
