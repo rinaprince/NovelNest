@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Client extends User implements \JsonSerializable
 {
 
+    //Hereta d'Usuari
+
+    //Atributs i mètodes propis
     #[ORM\Column(length: 50)]
     private ?string $telef = null;
 
