@@ -6,10 +6,11 @@ use App\Entity\Factura;
 use App\Entity\Client;
 use App\Entity\Obra;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-class FacturaFixtures extends Fixture
+class FacturaFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -33,5 +34,13 @@ class FacturaFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+            ObraFixtures::class,
+        ];
     }
 }

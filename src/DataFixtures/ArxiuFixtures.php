@@ -5,10 +5,11 @@ namespace App\DataFixtures;
 use App\Entity\Arxiu;
 use App\Entity\Obra;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-class ArxiuFixtures extends Fixture
+class ArxiuFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -27,5 +28,12 @@ class ArxiuFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            ObraFixtures::class,
+        ];
     }
 }

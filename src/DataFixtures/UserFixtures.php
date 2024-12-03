@@ -74,6 +74,7 @@ class UserFixtures extends Fixture
 
             //Referència
             $this->addReference('client_' . $i, $client);
+
         }
         $manager->flush();
     }
