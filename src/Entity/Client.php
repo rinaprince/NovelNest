@@ -10,10 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client extends User implements \JsonSerializable
 {
-
-    //Hereta d'Usuari
-
-    //Atributs i mètodes propis
     #[ORM\Column(length: 50)]
     private ?string $telef = null;
 
@@ -27,9 +23,6 @@ class Client extends User implements \JsonSerializable
     #[ORM\JoinColumn(nullable: false)]
     private ?Factura $id_Factura = null;
 
-    /**
-     * @var Collection<int, Obra>
-     */
     #[ORM\OneToMany(targetEntity: Obra::class, mappedBy: 'pseudonim_client')]
     private Collection $pseudonim;
 
@@ -46,7 +39,6 @@ class Client extends User implements \JsonSerializable
     public function setTelef(string $telef): static
     {
         $this->telef = $telef;
-
         return $this;
     }
 
@@ -58,7 +50,6 @@ class Client extends User implements \JsonSerializable
     public function setDireccio(string $direccio): static
     {
         $this->direccio = $direccio;
-
         return $this;
     }
 
@@ -70,7 +61,6 @@ class Client extends User implements \JsonSerializable
     public function setNumTarj(string $num_tarj): static
     {
         $this->num_tarj = $num_tarj;
-
         return $this;
     }
 
@@ -82,13 +72,9 @@ class Client extends User implements \JsonSerializable
     public function setIdFactura(?Factura $id_Factura): static
     {
         $this->id_Factura = $id_Factura;
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Obra>
-     */
     public function getPseudonim(): Collection
     {
         return $this->pseudonim;
@@ -107,7 +93,6 @@ class Client extends User implements \JsonSerializable
     public function removePseudonim(Obra $pseudonim): static
     {
         if ($this->pseudonim->removeElement($pseudonim)) {
-            // set the owning side to null (unless already changed)
             if ($pseudonim->getPseudonimClient() === $this) {
                 $pseudonim->setPseudonimClient(null);
             }

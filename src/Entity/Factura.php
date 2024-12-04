@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\FacturaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FacturaRepository::class)]
@@ -17,24 +16,20 @@ class Factura implements \JsonSerializable
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $preu = null;
+    private ?string $tipus = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $data = null;
+    #[ORM\Column(length: 255)]
+    private ?string $num_factura = null;
 
-    /**
-     * @var Collection<int, Client>
-     */
-    #[ORM\OneToMany(targetEntity: Client::class, mappedBy: 'id_Factura')]
-    private Collection $autor;
+    #[ORM\ManyToOne(inversedBy: 'id_Factura')]
+    private ?Client $client = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Obra $num_FacturaSeg = null;
+    #[ORM\OneToMany(mappedBy: 'factura', targetEntity: Obra::class)]
+    private Collection $obres;
 
     public function __construct()
     {
-        $this->autor = new ArrayCollection();
+        $this->obres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -42,75 +37,61 @@ class Factura implements \JsonSerializable
         return $this->id;
     }
 
-    public function setId(int $id): static
+    public function getTipus(): ?string
     {
-        $this->id = $id;
+        return $this->tipus;
+    }
 
+    public function setTipus(string $tipus): static
+    {
+        $this->tipus = $tipus;
         return $this;
     }
 
-    public function getPreu(): ?string
+    public function getNumFactura(): ?string
     {
-        return $this->preu;
+        return $this->num_factura;
     }
 
-    public function setPreu(string $preu): static
+    public function setNumFactura(string $num_factura): static
     {
-        $this->preu = $preu;
-
+        $this->num_factura = $num_factura;
         return $this;
     }
 
-    public function getData(): ?\DateTimeInterface
+    public function getClient(): ?Client
     {
-        return $this->data;
+        return $this->client;
     }
 
-    public function setData(\DateTimeInterface $data): static
+    public function setClient(?Client $client): static
     {
-        $this->data = $data;
-
+        $this->client = $client;
         return $this;
     }
 
-    /**
-     * @return Collection<int, Client>
-     */
-    public function getAutor(): Collection
+    public function getObres(): Collection
     {
-        return $this->autor;
+        return $this->obres;
     }
 
-    public function addAutor(Client $autor): static
+    public function addObra(Obra $obra): static
     {
-        if (!$this->autor->contains($autor)) {
-            $this->autor->add($autor);
-            $autor->setIdFactura($this);
+        if (!$this->obres->contains($obra)) {
+            $this->obres[] = $obra;
+            $obra->setFactura($this);
         }
 
         return $this;
     }
 
-    public function removeAutor(Client $autor): static
+    public function removeObra(Obra $obra): static
     {
-        if ($this->autor->removeElement($autor)) {
-            // set the owning side to null (unless already changed)
-            if ($autor->getIdFactura() === $this) {
-                $autor->setIdFactura(null);
+        if ($this->obres->removeElement($obra)) {
+            if ($obra->getFactura() === $this) {
+                $obra->setFactura(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getNumFacturaSeg(): ?Obra
-    {
-        return $this->num_FacturaSeg;
-    }
-
-    public function setNumFacturaSeg(Obra $num_FacturaSeg): static
-    {
-        $this->num_FacturaSeg = $num_FacturaSeg;
 
         return $this;
     }
@@ -119,10 +100,10 @@ class Factura implements \JsonSerializable
     {
         return [
             "id" => $this->getId(),
-            "preu" => $this->getPreu(),
-            "data" => $this->getData()?->format('d/m/Y'),
-            "autor" => $this->getAutor()->map(fn($autor) => $autor->jsonSerialize())->toArray(),
-            "num_FacturaSeg" => $this->getNumFacturaSeg(),
+            "tipus" => $this->getTipus(),
+            "num_factura" => $this->getNumFactura(),
+            "client" => $this->getClient()?->getId(),
+            "obres" => $this->getObres()->map(fn($obra) => $obra->jsonSerialize())->toArray(),
         ];
     }
 }
