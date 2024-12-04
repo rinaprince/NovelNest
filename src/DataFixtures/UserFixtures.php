@@ -69,13 +69,17 @@ class UserFixtures extends Fixture
             $manager->persist($client);
 
             // Obra
+            $arxiu = $this->getReference('arxiu_' . $i);
+
             $obra = new Obra();
             $obra->setTipus($faker->word());
             $obra->setNom($faker->sentence(3));
             $obra->setNumObraSeguiment($faker->unique()->numberBetween(1000, 9999));
             $obra->setEstat($faker->boolean());
             $obra->setPseudonimClient($client);
+            $obra->setPortada($faker->imageUrl());
             $obra->setFactura($factura);
+            $obra->setUrlArxiu($arxiu);
 
             $manager->persist($obra);
     }
