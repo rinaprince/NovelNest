@@ -25,7 +25,7 @@ class UserFixtures extends Fixture
     {
         $faker = Factory::create();
 
-        //1 administrador
+        // 1 Administrador
         $admin = new Administrador();
         $admin->setNomUsuari('admin');
         $admin->setContrasenya($this->passwordHasher->hashPassword($admin, 'admin'));
@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
         $admin->setRols(['ROLE_ADMIN']);
         $manager->persist($admin);
 
-        //1 treballador
+        // 1 Treballador
         $treballador = new Treballador();
         $treballador->setNomUsuari('treballador');
         $treballador->setContrasenya($this->passwordHasher->hashPassword($treballador, 'treballador'));
@@ -45,9 +45,15 @@ class UserFixtures extends Fixture
         $treballador->setRols(['ROLE_TREBALLADOR']);
         $manager->persist($treballador);
 
-        //5 clients amb factura i obra cadascún
+        // 5 Clients amb Factura i Obra
         for ($i = 0; $i < 5; $i++) {
-            //Client
+            // Factura
+            $factura = new Factura();
+            $factura->setTipus($faker->word());
+            $factura->setNumFactura($faker->unique()->numerify('FAC###'));
+            $manager->persist($factura);
+
+            // Client
             $client = new Client();
             $client->setNomUsuari('client' . ($i + 1));
             $client->setContrasenya($this->passwordHasher->hashPassword($client, 'client' . ($i + 1)));
@@ -58,30 +64,21 @@ class UserFixtures extends Fixture
             $client->setTelef($faker->phoneNumber());
             $client->setDireccio($faker->address());
             $client->setNumTarj($faker->creditCardNumber());
-
-            //Factura
-            $factura = new Factura();
-            $factura->setPreu($faker->randomFloat(2, 100, 1000));
-            $factura->setData($faker->dateTimeThisYear());
-
-            //Obra
-            $obra = new Obra();
-            $obra->setTipus($faker->word());
-            $obra->setNom($faker->sentence(3));
-            $obra->setNumObraSeguiment($faker->numberBetween(1000, 9999));
-            $obra->setEstat($faker->boolean());
-            $obra->setPseudonimClient($client);
-            $obra->setPortada($faker->imageUrl());
-            $obra->setUrlArxiu(null);
-
-            //1 factura a 1 obra i 1 client
-            $factura->setNumFacturaSeg($obra);
             $client->setIdFactura($factura);
 
             $manager->persist($client);
-            $manager->persist($factura);
+
+            // Obra
+            $obra = new Obra();
+            $obra->setTipus($faker->word());
+            $obra->setNom($faker->sentence(3));
+            $obra->setNumObraSeguiment($faker->unique()->numberBetween(1000, 9999));
+            $obra->setEstat($faker->boolean());
+            $obra->setPseudonimClient($client);
+            $obra->setFactura($factura);
+
             $manager->persist($obra);
-        }
+    }
 
         $manager->flush();
     }
