@@ -1,6 +1,9 @@
 <header>
     <nav class="bg-rosa border-bottom py-2 border-bottom border-black">
         <div class="container-fluid d-flex justify-content-between align-items-center">
+            {% if app.user %}
+                <span class="text-dark pe-5">{{ app.user.getNomUsuari() }}</span>
+            {% endif %}
             <div class="d-flex justify-content-center flex-grow-1">
                 <h1 class="text-taronja">NovelNest</h1>
             </div>

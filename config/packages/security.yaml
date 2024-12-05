@@ -30,12 +30,6 @@ security:
 
     access_control:
         - { path: ^/admin, roles: ROLE_TREBALLADOR }
-        - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/editors, roles: PUBLIC_ACCESS }
-        - { path: ^/privacitat, roles: PUBLIC_ACCESS }
-        - { path: ^/cookies, roles: PUBLIC_ACCESS }
-        - { path: ^/contacte, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
