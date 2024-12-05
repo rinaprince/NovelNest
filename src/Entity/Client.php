@@ -23,12 +23,15 @@ class Client extends User implements \JsonSerializable
     #[ORM\JoinColumn(nullable: false)]
     private ?Factura $id_Factura = null;
 
+    #[ORM\Column(length: 50, unique: true)]
+    private ?string $pseudonim = null;
+
     #[ORM\OneToMany(targetEntity: Obra::class, mappedBy: 'pseudonim_client')]
-    private Collection $pseudonim;
+    private Collection $obres;
 
     public function __construct()
     {
-        $this->pseudonim = new ArrayCollection();
+        $this->obres = new ArrayCollection();
     }
 
     public function getTelef(): ?string
@@ -75,26 +78,37 @@ class Client extends User implements \JsonSerializable
         return $this;
     }
 
-    public function getPseudonim(): Collection
+    public function getPseudonim(): ?string
     {
         return $this->pseudonim;
     }
 
-    public function addPseudonim(Obra $pseudonim): static
+    public function setPseudonim(string $pseudonim): static
     {
-        if (!$this->pseudonim->contains($pseudonim)) {
-            $this->pseudonim->add($pseudonim);
-            $pseudonim->setPseudonimClient($this);
+        $this->pseudonim = $pseudonim;
+        return $this;
+    }
+
+    public function getObres(): Collection
+    {
+        return $this->obres;
+    }
+
+    public function addObra(Obra $obra): static
+    {
+        if (!$this->obres->contains($obra)) {
+            $this->obres->add($obra);
+            $obra->setPseudonimClient($this);
         }
 
         return $this;
     }
 
-    public function removePseudonim(Obra $pseudonim): static
+    public function removeObra(Obra $obra): static
     {
-        if ($this->pseudonim->removeElement($pseudonim)) {
-            if ($pseudonim->getPseudonimClient() === $this) {
-                $pseudonim->setPseudonimClient(null);
+        if ($this->obres->removeElement($obra)) {
+            if ($obra->getPseudonimClient() === $this) {
+                $obra->setPseudonimClient(null);
             }
         }
 
@@ -109,7 +123,7 @@ class Client extends User implements \JsonSerializable
             "direccio" => $this->getDireccio(),
             "num_tarj" => $this->getNumTarj(),
             "id_factura" => $this->getIdFactura()?->getId(),
-            "pseudonim" => $this->getPseudonim()->map(fn($obra) => $obra->jsonSerialize())->toArray(),
+            "pseudonim" => $this->getPseudonim(),
         ];
     }
 }

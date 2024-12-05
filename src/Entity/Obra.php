@@ -25,7 +25,7 @@ class Obra implements \JsonSerializable
     #[ORM\Column]
     private ?bool $estat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'pseudonim')]
+    #[ORM\ManyToOne(inversedBy: 'obres')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $pseudonim_client = null;
 
