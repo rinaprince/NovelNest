@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
@@ -15,7 +15,11 @@ class LoginController extends AbstractController
         if ($this->getUser()) {
             $roles = $this->getUser()->getRoles();
 
-            if (in_array('ROLE_ADMIN', $roles) || in_array('ROLE_TREBALLADOR', $roles)) {
+            if (in_array('ROLE_ADMIN', $roles)) {
+                return $this->redirectToRoute('app_home_back');
+            }
+
+            if (in_array('ROLE_TREBALLADOR', $roles)) {
                 return $this->redirectToRoute('app_home_back');
             }
 
