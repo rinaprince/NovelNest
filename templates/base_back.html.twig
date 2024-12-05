@@ -18,7 +18,16 @@
 </head>
 <body>
 {% include '_header_back.html.twig' %}
-{% include '_aside_back.html.twig' %}
-{% block body %}{% endblock %}
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            {% include '_aside_back.html.twig' %}
+            <div class="col-10">
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</main>
 </body>
 </html>

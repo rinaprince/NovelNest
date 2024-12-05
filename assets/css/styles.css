@@ -27,8 +27,16 @@ h2{
     background-color: #C2E0FF;
 }
 
+.bg-blau-back{
+    background-color: #6A85B4;
+}
+
 .bg-taronja{
     background-color: #FB8674;
+}
+
+.text-blau{
+    color: #C2E0FF;
 }
 
 .text-logo{

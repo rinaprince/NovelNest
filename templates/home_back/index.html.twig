@@ -3,5 +3,15 @@
 {% block title %}Página principal de administración.{% endblock %}
 
 {% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class="fs-3 py-5">Página de administración</h2>
+            </div>
+            <div class="px-5">
+                <p>¡Bienvenido/a <span class="text-logo">{{ app.user.getNomUsuari() }}</span>! Ahora mismo te encuentras en la página principal de administración donde puedes gestionar lo que necesites.</p>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
