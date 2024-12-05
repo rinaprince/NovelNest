@@ -27,6 +27,10 @@ h2{
     background-color: #C2E0FF;
 }
 
+.bg-taronja{
+    background-color: #FB8674;
+}
+
 .text-logo{
     color: #6A85B4;
 }
@@ -104,4 +108,9 @@ h2{
 /* Editors i editores */
 .bg-rosa{
     background-color: #FDAFBF;;
+}
+
+/* Aside */
+.aside-list{
+    list-style-type: none;
 }

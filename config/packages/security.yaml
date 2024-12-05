@@ -18,17 +18,18 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                default_target_path: app_home_back
+
             logout:
                 path: app_logout
-                target: app_home
 
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_TREBALLADOR, ROLE_CLIENT, ROLE_USER]
+        ROLE_ADMIN: [ROLE_TREBALLADOR]
         ROLE_TREBALLADOR: [ROLE_USER]
         ROLE_CLIENT: [ROLE_USER]
-        ROLE_ANONIM: []
 
     access_control:
+        - { path: ^/admin, roles: ROLE_TREBALLADOR }
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/editors, roles: PUBLIC_ACCESS }
         - { path: ^/privacitat, roles: PUBLIC_ACCESS }
