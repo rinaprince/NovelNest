@@ -35,7 +35,7 @@
                 {% if app.user and is_granted('ROLE_CLIENT') %}
                     <a class="btn text-dark" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right fs-5"></i> Salir</a>
                 {% else %}
-                    <a class="btn" href="{{ path('app_login') }}"><i class="bi bi-person-circle fs-3"></i> Acceder</a>
+                    <a class="btn btn-outline-dark" href="{{ path('app_login') }}"><i class="bi bi-person-circle fs-3"></i> Acceder</a>
                 {% endif %}
             </div>
         </div>

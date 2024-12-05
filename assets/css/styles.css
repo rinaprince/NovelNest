@@ -64,6 +64,18 @@ h2{
     border-color: #ff7b9c;
 }
 
+.btn-blau{
+    color: #000000;
+    background-color: #C2E0FF;
+    border-color: #C2E0FF;
+}
+
+.btn-blau:hover{
+    color: #000000;
+    background-color: #6A85B4;
+    border-color: #6A85B4;
+}
+
 .link-rosa{
     color: #FDAFBF;
     text-decoration: none;

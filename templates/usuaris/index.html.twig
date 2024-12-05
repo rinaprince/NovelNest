@@ -1,0 +1,39 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Gestió d'Usuaris{% endblock %}
+
+{% block body %}
+    <h1>Administradors i Treballadors</h1>
+
+    <a href="{{ path('app_usuaris_new') }}" class="btn btn-primary">Nou Usuari</a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Cognom</th>
+            <th>Rol</th>
+            <th>Accions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for usuari in usuaris %}
+            <tr>
+                <td>{{ usuari.id }}</td>
+                <td>{{ usuari.nom }}</td>
+                <td>{{ usuari.cognom }}</td>
+                <td>{{ usuari.rols[0] == 'admin' ? 'Administrador' : 'Treballador' }}</td>
+                <td>
+                    <a href="{{ path('app_usuaris_edit', { id: usuari.id }) }}" class="btn btn-warning">Editar</a>
+                    <form action="{{ path('app_usuaris_delete', { id: usuari.id }) }}" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger" onclick="return confirm('Estàs segur?')">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
