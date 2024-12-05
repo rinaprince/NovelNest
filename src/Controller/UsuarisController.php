@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Administrador;
 use App\Entity\Treballador;
-use App\Repository\UserRepository;
+use App\Entity\User;
+use App\Form\UserType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,78 +14,93 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UsuarisController extends AbstractController
 {
-    #[Route('/admin/usuaris', name: 'app_usuaris_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    #[Route('/admin/usuaris', name: 'app_usuaris_index')]
+    public function index(EntityManagerInterface $em): Response
     {
-        //Obtindre administradors/treballadors
-        $administradors = $userRepository->findBy(['rol' => 'admin']);
-        $treballadors = $userRepository->findBy(['rol' => 'treballador']);
-
-        //Combinar resultats
-        $usuaris = array_merge($administradors, $treballadors);
+        $administradors = $em->getRepository(Administrador::class)->findAll();
+        $treballadors = $em->getRepository(Treballador::class)->findAll();
 
         return $this->render('usuaris/index.html.twig', [
-            'usuaris' => $usuaris,
+            'administradors' => $administradors,
+            'treballadors' => $treballadors,
         ]);
     }
 
-    #[Route('admin/usuaris/nou', name: 'app_usuaris_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository): Response
+    #[Route('/admin/usuaris/new', name: 'app_usuaris_new')]
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
-        if ($request->getMethod() === 'POST') {
-            $data = $request->request->all();
-            $userClass = $data['rol'] === 'admin' ? Administrador::class : Treballador::class;
+        $role = $request->query->get('role', 'admin');
+        $user = $role === 'admin' ? new Administrador() : new Treballador();
 
-            $usuari = new $userClass();
-            $usuari->setNom($data['nom'])
-                ->setCognom($data['cognom'])
-                ->setNomUsuari($data['nom_usuari'])
-                ->setContrasenya(password_hash($data['contrasenya'], PASSWORD_BCRYPT))
-                ->setRols([$data['rol']]);
+        $form = $this->createForm(UserType::class, $user, [
+            'data_class' => get_class($user),
+        ]);
+        $form->handleRequest($request);
 
-            $userRepository->save($usuari, true);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($user);
+            $em->flush();
 
+            $this->addFlash('success', 'Usuari creat correctament!');
             return $this->redirectToRoute('app_usuaris_index');
         }
 
-        return $this->render('usuaris/new.html.twig');
+        return $this->render('usuaris/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
-    #[Route('admin/usuaris/{id}/editar', name: 'app_usuaris_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, UserRepository $userRepository, int $id): Response
+    #[Route('/admin/usuaris/{id}/show', name: 'app_usuaris_show')]
+    public function show(int $id, EntityManagerInterface $em): Response
     {
-        $usuari = $userRepository->find($id);
+        $user = $em->find(User::class, $id);
 
-        if (!$usuari) {
-            throw $this->createNotFoundException('Usuari no trobat');
+        if (!$user || !($user instanceof Administrador || $user instanceof Treballador)) {
+            throw $this->createNotFoundException('Usuari no trobat.');
         }
 
-        if ($request->getMethod() === 'POST') {
-            $data = $request->request->all();
-            $usuari->setNom($data['nom'])
-                ->setCognom($data['cognom'])
-                ->setNomUsuari($data['nom_usuari']);
+        return $this->render('usuaris/show.html.twig', [
+            'user' => $user,
+        ]);
+    }
 
-            $userRepository->save($usuari, true);
 
+    #[Route('/admin/usuaris/{id}/edit', name: 'app_usuaris_edit')]
+    public function edit(int $id, Request $request, EntityManagerInterface $em): Response
+    {
+        $user = $em->find(User::class, $id);
+
+        if (!$user || !($user instanceof Administrador || $user instanceof Treballador)) {
+            throw $this->createNotFoundException('Usuari no trobat.');
+        }
+
+        $form = $this->createForm(UserType::class, $user, [
+            'data_class' => get_class($user),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            $this->addFlash('success', 'Usuari actualitzat correctament!');
             return $this->redirectToRoute('app_usuaris_index');
         }
 
         return $this->render('usuaris/edit.html.twig', [
-            'usuari' => $usuari,
+            'form' => $form->createView(),
         ]);
     }
 
-    #[Route('admin/usuaris/{id}/eliminar', name: 'app_usuaris_delete', methods: ['POST'])]
-    public function delete(Request $request, UserRepository $userRepository, int $id): Response
+    #[Route('/admin/usuaris/{id}/delete', name: 'app_usuaris_delete')]
+    public function delete(int $id, EntityManagerInterface $em): Response
     {
-        $usuari = $userRepository->find($id);
+        $user = $em->find(User::class, $id);
 
-        if (!$usuari) {
-            throw $this->createNotFoundException('Usuari no trobat');
+        if ($user && ($user instanceof Administrador || $user instanceof Treballador)) {
+            $em->remove($user);
+            $em->flush();
+            $this->addFlash('success', 'Usuari eliminat correctament!');
         }
-
-        $userRepository->remove($usuari, true);
 
         return $this->redirectToRoute('app_usuaris_index');
     }
