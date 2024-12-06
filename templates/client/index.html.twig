@@ -1,53 +1,86 @@
 {% extends 'base_back.html.twig' %}
 
-{% block title %}Client index{% endblock %}
+{% block title %}Gestión de Clientes{% endblock %}
 
 {% block body %}
-    <h1>Client index</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class="fs-3 py-5">Gestionar Clientes</h2>
+            </div>
+        </div>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom_usuari</th>
-                <th>Contrasenya</th>
-                <th>Nom</th>
-                <th>Cognom</th>
-                <th>Correu</th>
-                <th>Rols</th>
-                <th>Telef</th>
-                <th>Direccio</th>
-                <th>Num_tarj</th>
-                <th>Pseudonim</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for client in clients %}
-            <tr>
-                <td>{{ client.id }}</td>
-                <td>{{ client.nomUsuari }}</td>
-                <td>{{ client.contrasenya }}</td>
-                <td>{{ client.nom }}</td>
-                <td>{{ client.cognom }}</td>
-                <td>{{ client.correu }}</td>
-                <td>{{ client.rols ? client.rols|join(', ') : '' }}</td>
-                <td>{{ client.telef }}</td>
-                <td>{{ client.direccio }}</td>
-                <td>{{ client.numTarj }}</td>
-                <td>{{ client.pseudonim }}</td>
-                <td>
-                    <a href="{{ path('app_client_show', {'id': client.id}) }}">show</a>
-                    <a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="12">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ path('app_client_new') }}" class="btn btn-blau"><i class="bi bi-plus-square"></i> Nuevo Cliente</a>
+                    <form method="get" role="search" class="d-flex">
+                        <input type="search" class="form-control rounded-start-pill" name="q"
+                               aria-label="Search" placeholder="Buscar cliente...">
+                        <button type="submit" class="btn btn-rosa rounded-end-pill"><i class="bi bi-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_client_new') }}">Create new</a>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <h3 class="text-taronja text-center pb-4">Clientes</h3>
+                <table class="table table-hover text-center">
+                    <thead class="table-warning">
+                    <tr>
+                        <th class="d-none">ID</th>
+                        <th class="d-none">Nombre de usuario</th>
+                        <th class="d-none">Contraseña</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th class="d-none">Roles</th>
+                        <th>Teléfono</th>
+                        <th class="d-none">Dirección</th>
+                        <th class="d-none">Numero de tarjeta</th>
+                        <th class="d-none">Seudonimo</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for client in clients %}
+                        <tr>
+                            <td class="d-none">{{ client.id }}</td>
+                            <td class="d-none">{{ client.nomUsuari }}</td>
+                            <td class="d-none">{{ client.contrasenya }}</td>
+                            <td>{{ client.nom }}</td>
+                            <td>{{ client.cognom }}</td>
+                            <td>{{ client.correu }}</td>
+                            <td class="d-none">{{ client.rols ? client.rols|join(', ') : '' }}</td>
+                            <td>{{ client.telef }}</td>
+                            <td class="d-none">{{ client.direccio }}</td>
+                            <td class="d-none">{{ client.numTarj }}</td>
+                            <td class="d-none">{{ client.pseudonim }}</td>
+                            <td>
+                                <a class="btn btn-primary me-2" href="{{ path('app_client_edit', {'id': client.id}) }}"><i class="bi bi-pencil-square"></i></a>
+                                <a class="btn btn-success me-2 href="{{ path('app_client_show', {'id': client.id}) }}"><i class="bi bi-eye"></i></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="12">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+
 {% endblock %}
+

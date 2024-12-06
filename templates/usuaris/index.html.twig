@@ -1,74 +1,134 @@
 {% extends 'base_back.html.twig' %}
 
-{% block title %}Gestió d'Usuaris{% endblock %}
+{% block title %}Gestión de usuarios{% endblock %}
 
 {% block body %}
-    <h1>Gestió d'Usuaris</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class=" fs-3 py-5">Gestionar Usuarios</h2>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_usuaris_new') }}" class="btn btn-primary">Nou Usuari</a>
-
-    <h2>Administradors</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Cognom</th>
-            <th>Rol</th>
-            <th>Accions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for administrador in administradors %}
-            <tr>
-                <td>{{ administrador.id }}</td>
-                <td>{{ administrador.nom }}</td>
-                <td>{{ administrador.cognom }}</td>
-                <td>Administrador</td>
-                <td>
-                    <a href="{{ path('app_usuaris_edit', { id: administrador.id }) }}" class="btn btn-warning">Editar</a>
-                    <a href="{{ path('app_usuaris_show', { id: administrador.id }) }}" class="btn btn-info">Veure Detalls</a>
-                    <form action="{{ path('app_usuaris_delete', { id: administrador.id }) }}" method="post" style="display:inline;">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button class="btn btn-danger" onclick="return confirm('Estàs segur?')">Eliminar</button>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ path('app_usuaris_new') }}" class="btn btn-blau"><i class="bi bi-plus-square"></i> Nou
+                        Usuari</a>
+                    <form method="get" role="search" class="d-flex">
+                        <input type="search" class="form-control rounded-start-pill" name="q"
+                               aria-label="Search" placeholder="Bucar título...">
+                        <button type="submit" class="btn btn-rosa rounded-end-pill"><i class="bi bi-search"></i>
+                        </button>
                     </form>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
 
-    <h2>Treballadors</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Cognom</th>
-            <th>Rol</th>
-            <th>Accions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for treballador in treballadors %}
-            <tr>
-                <td>{{ treballador.id }}</td>
-                <td>{{ treballador.nom }}</td>
-                <td>{{ treballador.cognom }}</td>
-                <td>Treballador</td>
-                <td>Treballador</td>
-                <td>
-                    <a href="{{ path('app_usuaris_edit', { id: treballador.id }) }}" class="btn btn-warning">Editar</a>
-                    <a href="{{ path('app_usuaris_show', { id: treballador.id }) }}" class="btn btn-info">Veure Detalls</a>
-                    <form action="{{ path('app_usuaris_delete', { id: treballador.id }) }}" method="post" style="display:inline;">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button class="btn btn-danger" onclick="return confirm('Estàs segur?')">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <h3 class="text-taronja text-center pb-4">Administradora</h3>
+                <table class="table table-hover text-center">
+                    <thead class="table-warning">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Cognom</th>
+                        <th>Rol</th>
+                        <th>Accions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for administrador in administradors %}
+                        <tr>
+                            <td>{{ administrador.id }}</td>
+                            <td>{{ administrador.nom }}</td>
+                            <td>{{ administrador.cognom }}</td>
+                            <td>Administrador</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Acciones">
+                                    <a href="{{ path('app_usuaris_edit', { id: administrador.id }) }}"
+                                       class="btn btn-primary me-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="{{ path('app_usuaris_show', { id: administrador.id }) }}"
+                                       class="btn btn-success me-2">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <form action="{{ path('app_usuaris_delete', { id: administrador.id }) }}"
+                                          method="post" class="d-inline-block">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button class="btn btn-danger" onclick="return confirm('Estàs segur?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <h3 class="text-danger text-center pb-4">Trabajadores</h3>
+                <table class="table table-hover text-center">
+                    <thead class="table-warning">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Cognom</th>
+                        <th>Rol</th>
+                        <th>Accions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for treballador in treballadors %}
+                        <tr>
+                            <td>{{ treballador.id }}</td>
+                            <td>{{ treballador.nom }}</td>
+                            <td>{{ treballador.cognom }}</td>
+                            <td>Treballador</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Acciones">
+                                    <a href="{{ path('app_usuaris_edit', { id: treballador.id }) }}"
+                                       class="btn btn-primary me-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="{{ path('app_usuaris_show', { id: treballador.id }) }}"
+                                       class="btn btn-success me-2">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <form action="{{ path('app_usuaris_delete', { id: treballador.id }) }}"
+                                          method="post" class="d-inline-block">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button class="btn btn-danger" onclick="return confirm('Estàs segur?')"><i
+                                                    class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
 {% endblock %}
 
 

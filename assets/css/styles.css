@@ -134,3 +134,7 @@ h2{
 .aside-list{
     list-style-type: none;
 }
+
+.active {
+    font-weight: bold;
+}
