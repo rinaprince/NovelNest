@@ -36,14 +36,19 @@ class UserType extends AbstractType
                 'required' => true,
                 'attr' => ['class' => 'form-control'],
             ])
+            ->add('correu', TextType::class, [
+                'label' => 'Correu electrònic',
+                'required' => true,
+                'attr' => ['class' => 'form-control'],
+            ])
             ->add('rols', ChoiceType::class, [
                 'label' => 'Rol',
-                'choices' => [
-                    'Administrador' => 'admin',
-                    'Treballador' => 'treballador',
-                ],
+                'choices' => array_flip([
+                    'admin' => 'Administrador',
+                    'treballador' => 'Treballador',
+                ]),
                 'expanded' => false,
-                'multiple' => false,
+                'multiple' => true,
                 'attr' => ['class' => 'form-control'],
             ]);
     }

@@ -38,10 +38,15 @@ class UsuarisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $selectedRole = $form->get('rols')->getData();
+
+            $user->setRols(is_array($selectedRole) ? $selectedRole : [$selectedRole]);
+
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Usuari creat correctament!');
+            $this->addFlash('success', 'Usuario creado correctamente.');
             return $this->redirectToRoute('app_usuaris_index');
         }
 
