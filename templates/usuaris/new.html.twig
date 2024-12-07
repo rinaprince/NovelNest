@@ -4,35 +4,50 @@
 
 {% block body %}
     <div class="container">
-        <h1>Creando un usuario</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                    <h2 class=" fs-3 py-5">Creando usuarios</h2>
+                </div>
+            </div>
+        </div>
 
         {{ form_start(form) }}
         <div class="row justify-content-center">
-            <div class="col-md-4 mt-3">
-                {{ form_row(form.nom) }}
+            <div class="col-md-4 mt-3 mb-5">
+                {{ form_row(form.nom, {'label': 'Nombre'}) }}
             </div>
             <div class="col-md-4 mt-3">
-                {{ form_row(form.cognom) }}
+                {{ form_row(form.cognom, {'label': 'Apellido'}) }}
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-4 mt-3">
-                {{ form_row(form.nom_usuari) }}
+            <div class="col-md-4 mt-3 mb-5">
+                {{ form_row(form.nom_usuari, {'label': 'Nombre de usuario'}) }}
             </div>
             <div class="col-md-4 mt-3 justify-content-center">
-                {{ form_row(form.contrasenya) }}
+                {{ form_row(form.contrasenya, {'label': 'Contraseña'}) }}
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-4 mt-3">
-                {{ form_row(form.correu) }}
+                {{ form_row(form.correu, {'label': 'Correo'}) }}
             </div>
             <div class="col-md-4 mt-3">
-                {{ form_row(form.rols) }}
+                {{ form_row(form.rols, {'label': 'Rol'}) }}
             </div>
         </div>
 
-        <button type="submit" class="btn btn-success mt-3">Guardar</button>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center my-5">
+                <a href="{{ path('app_usuaris_index') }}" class="btn btn-danger">Volver atrás</a>
+                <button type="submit" class="btn btn-success mt-3">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}
