@@ -16,6 +16,16 @@
     src: url("../css/fonts/Montserrat-Medium.ttf");
 }
 
+/* Ajustar el aside per a que cresca */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 h2{
     font-family: 'Montserrat-Medium', sans-serif;
     color: #6A85B4;
