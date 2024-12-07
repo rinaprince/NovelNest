@@ -4,15 +4,15 @@
 
 {% block body %}
     <div class="container">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center">
-                    <h2 class=" fs-3 py-5">Creando usuarios</h2>
-                </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class=" fs-3 py-5">Creando un usuario</h2>
             </div>
         </div>
+    </div>
 
-        {{ form_start(form) }}
+    {{ form_start(form) }}
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-4 mt-3 mb-5">
                 {{ form_row(form.nom, {'label': 'Nombre'}) }}
