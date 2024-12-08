@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Obra index{% endblock %}
+
+{% block body %}
+    <h1>Obra index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tipus</th>
+                <th>Nom</th>
+                <th>NumObra_seguiment</th>
+                <th>Estat</th>
+                <th>Portada</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for obra in obras %}
+            <tr>
+                <td>{{ obra.id }}</td>
+                <td>{{ obra.tipus }}</td>
+                <td>{{ obra.nom }}</td>
+                <td>{{ obra.numObraSeguiment }}</td>
+                <td>{{ obra.estat ? 'Yes' : 'No' }}</td>
+                <td>{{ obra.portada }}</td>
+                <td>
+                    <a href="{{ path('app_obra_show', {'id': obra.id}) }}">show</a>
+                    <a href="{{ path('app_obra_edit', {'id': obra.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_obra_new') }}">Create new</a>
+{% endblock %}

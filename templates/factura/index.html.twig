@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Factura index{% endblock %}
+
+{% block body %}
+    <h1>Factura index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tipus</th>
+                <th>Num_factura</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for factura in facturas %}
+            <tr>
+                <td>{{ factura.id }}</td>
+                <td>{{ factura.tipus }}</td>
+                <td>{{ factura.numFactura }}</td>
+                <td>
+                    <a href="{{ path('app_factura_crontroller_show', {'id': factura.id}) }}">show</a>
+                    <a href="{{ path('app_factura_crontroller_edit', {'id': factura.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_factura_crontroller_new') }}">Create new</a>
+{% endblock %}

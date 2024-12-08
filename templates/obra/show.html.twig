@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Obra{% endblock %}
+
+{% block body %}
+    <h1>Obra</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ obra.id }}</td>
+            </tr>
+            <tr>
+                <th>Tipus</th>
+                <td>{{ obra.tipus }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ obra.nom }}</td>
+            </tr>
+            <tr>
+                <th>NumObra_seguiment</th>
+                <td>{{ obra.numObraSeguiment }}</td>
+            </tr>
+            <tr>
+                <th>Estat</th>
+                <td>{{ obra.estat ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Portada</th>
+                <td>{{ obra.portada }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_obra_index') }}">back to list</a>
+
+    <a href="{{ path('app_obra_edit', {'id': obra.id}) }}">edit</a>
+
+    {{ include('obra/_delete_form.html.twig') }}
+{% endblock %}
