@@ -1,34 +1,62 @@
 {% extends 'base_back.html.twig' %}
 
-{% block title %}Obra index{% endblock %}
+{% block title %}Gestionar Obras{% endblock %}
 
 {% block body %}
-    <h1>Obra index</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class=" fs-3 py-5">Lista de obras</h2>
+            </div>
+        </div>
+    </div>
 
-    <table class="table">
-        <thead>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ path('app_obra_new') }}" class="btn btn-blau"><i class="bi bi-plus-square"></i> Nueva
+                        historia</a>
+                    <form method="get" role="search" class="d-flex">
+                        <input type="search" class="form-control rounded-start-pill" name="q"
+                               aria-label="Search" placeholder="Bucar título...">
+                        <button type="submit" class="btn btn-rosa rounded-end-pill"><i class="bi bi-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-hover text-center">
+                <thead class="table-danger">
             <tr>
-                <th>Id</th>
-                <th>Tipus</th>
-                <th>Nom</th>
-                <th>NumObra_seguiment</th>
-                <th>Estat</th>
-                <th>Portada</th>
-                <th>actions</th>
+                <th class="d-none">Id</th>
+                <th class="d-none">Tipus</th>
+                <th>Título</th>
+                <th class="d-none">NumObra_seguiment</th>
+                <th>Estado</th>
+                <th class="d-none">Portada</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         {% for obra in obras %}
             <tr>
-                <td>{{ obra.id }}</td>
-                <td>{{ obra.tipus }}</td>
+                <td class="d-none">{{ obra.id }}</td>
+                <td class="d-none">{{ obra.tipus }}</td>
                 <td>{{ obra.nom }}</td>
-                <td>{{ obra.numObraSeguiment }}</td>
-                <td>{{ obra.estat ? 'Yes' : 'No' }}</td>
-                <td>{{ obra.portada }}</td>
-                <td>
-                    <a href="{{ path('app_obra_show', {'id': obra.id}) }}">show</a>
-                    <a href="{{ path('app_obra_edit', {'id': obra.id}) }}">edit</a>
+                <td class="d-none">{{ obra.numObraSeguiment }}</td>
+                <td>{{ obra.estat ? 'Entregat' : 'No entregat' }}</td>
+                <td class="d-none">{{ obra.portada }}</td>
+                <td class="d-flex">
+                    <a class="btn btn-success me-1" href="{{ path('app_obra_show', {'id': obra.id}) }}"><i
+                                class="bi bi-eye"></i></a>
+                    <a class="btn btn-primary me-1" href="{{ path('app_obra_edit', {'id': obra.id}) }}"><i
+                                class="bi bi-pencil-square"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -38,6 +66,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_obra_new') }}">Create new</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -28,48 +28,50 @@
         </div>
     </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-    <table class="table table-hover text-center">
-        <thead class="table-danger">
-        <tr>
-            <th class="d-none">Id</th>
-            <th class="d-none">Nombre de usuario</th>
-            <th class="d-none">Contrasenya</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Correo</th>
-            <th>Roles</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            {% if 'ROLE_ADMIN' in user.rols or 'ROLE_TREBALLADOR' in user.rols %}
-                <tr>
-                    <td class="d-none">{{ user.id }}</td>
-                    <td class="d-none">{{ user.nomUsuari }}</td>
-                    <td class="d-none">{{ user.contrasenya }}</td>
-                    <td>{{ user.nom }}</td>
-                    <td>{{ user.cognom }}</td>
-                    <td>{{ user.correu }}</td>
-                    <td>{{ user.rols ? user.rols|join(', ') : '' }}</td>
-                    <td class="d-flex">
-                        <a class="btn btn-success me-1" href="{{ path('app_user_show', {'id': user.id}) }}"><i class="bi bi-eye"></i></a>
-                        <a class="btn btn-primary me-1" href="{{ path('app_user_edit', {'id': user.id}) }}"><i class="bi bi-pencil-square"></i></a>
-                        {{ include('user/_delete_form.html.twig') }}
-                    </td>
-                </tr>
-            {% endif %}
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover text-center">
+                    <thead class="table-danger">
+                    <tr>
+                        <th class="d-none">Id</th>
+                        <th class="d-none">Nombre de usuario</th>
+                        <th class="d-none">Contrasenya</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Roles</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        {% if 'ROLE_ADMIN' in user.rols or 'ROLE_TREBALLADOR' in user.rols %}
+                            <tr>
+                                <td class="d-none">{{ user.id }}</td>
+                                <td class="d-none">{{ user.nomUsuari }}</td>
+                                <td class="d-none">{{ user.contrasenya }}</td>
+                                <td>{{ user.nom }}</td>
+                                <td>{{ user.cognom }}</td>
+                                <td>{{ user.correu }}</td>
+                                <td>{{ user.rols ? user.rols|join(', ') : '' }}</td>
+                                <td class="d-flex">
+                                    <a class="btn btn-success me-1" href="{{ path('app_user_show', {'id': user.id}) }}"><i
+                                                class="bi bi-eye"></i></a>
+                                    <a class="btn btn-primary me-1" href="{{ path('app_user_edit', {'id': user.id}) }}"><i
+                                                class="bi bi-pencil-square"></i></a>
+                                    {{ include('user/_delete_form.html.twig') }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
