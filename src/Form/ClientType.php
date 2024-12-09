@@ -6,6 +6,7 @@ use App\Entity\Client;
 use App\Entity\Factura;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,7 +20,14 @@ class ClientType extends AbstractType
             ->add('nom')
             ->add('cognom')
             ->add('correu')
-            ->add('rols')
+            ->add('rols', ChoiceType::class, [
+                'choices' => [
+                    'Cliente' => 'ROLE_CLIENT',
+                ],
+                'multiple' => true,
+                'expanded' => false,
+                'label' => 'Roles',
+            ])
             ->add('telef')
             ->add('direccio')
             ->add('num_tarj')
@@ -27,7 +35,10 @@ class ClientType extends AbstractType
             ->add('id_Factura', EntityType::class, [
                 'class' => Factura::class,
                 'choice_label' => 'id',
-            ])
+                'attr' => ['class' => 'd-none'],
+                'label' => false,
+                'required' => false,
+            ]);
         ;
     }
 

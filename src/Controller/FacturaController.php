@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/factura/')]
 final class FacturaController extends AbstractController
 {
-    #[Route(name: 'app_factura__index', methods: ['GET'])]
+    #[Route(name: 'app_factura_index', methods: ['GET'])]
     public function index(FacturaRepository $facturaRepository): Response
     {
         return $this->render('factura_/index.html.twig', [

@@ -8,7 +8,7 @@
                 Página principal
             </a>
         </li>
-        {% if 'ROLE_ADMIN' in app.user.roles %}
+        {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
             <li class="pb-3 {{ app.request.attributes.get('_route') == 'app_user_index' ? 'active' : '' }}">
                 <i class="bi bi-people"></i>
                 <a href="{{ path('app_user_index') }}"

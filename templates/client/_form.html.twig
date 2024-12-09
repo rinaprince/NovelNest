@@ -1,4 +1,47 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+<div class="container bg-white">
+    <div class="row">
+        <div class="col-6 mb-5">
+            {{ form_row(form.nom_usuari, {'label': 'Nombre de usuario', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-6 mb-5">
+            {{ form_row(form.contrasenya, {'label': 'Contraseña', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-6 mb-5">
+            {{ form_row(form.pseudonim, {'label': 'Seudónimo', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-6 mb-5">
+            {{ form_row(form.nom, {'label': 'Nombre', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-6 mb-5">
+            {{ form_row(form.cognom, {'label': 'Apellido', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-6 mb-5">
+            {{ form_row(form.correu, {'label': 'Correo', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-6 mb-5">
+            {{ form_row(form.telef, {'label': 'Teléfono', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-6 mb-5">
+            {{ form_row(form.direccio, {'label': 'Dirección', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-6 mb-5">
+            {{ form_row(form.num_tarj, {'label': 'Numero de tarjeta', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-2 mb-5">
+            {{ form_row(form.rols, {'label': 'Rol', 'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+</div>
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <a class="btn btn-rosa" href="{{ path('app_client_index') }}">Volver</a>
+                <button class="btn btn-outline-success">{{ button_label|default('Actualizar') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
 {{ form_end(form) }}
