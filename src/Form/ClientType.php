@@ -7,6 +7,7 @@ use App\Entity\Factura;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,7 +17,11 @@ class ClientType extends AbstractType
     {
         $builder
             ->add('nom_usuari')
-            ->add('contrasenya')
+            ->add('contrasenya', PasswordType::class, [
+                'label' => 'Contraseña',
+                'attr' => ['class' => 'form-control'],
+                'required' => false,
+            ])
             ->add('nom')
             ->add('cognom')
             ->add('correu')

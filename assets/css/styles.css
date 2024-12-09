@@ -16,19 +16,28 @@
     src: url("../css/fonts/Montserrat-Medium.ttf");
 }
 
-/* Ajustar el aside per a que cresca */
-html,
-body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-}
-
 h2{
     font-family: 'Montserrat-Medium', sans-serif;
     color: #6A85B4;
+}
+
+/* Aside flexible */
+.row {
+    display: flex;
+}
+.col-10, .aside {
+    display: flex;
+    flex-direction: column;
+}
+.aside{
+    min-height: 100vh;
+}
+.aside ul {
+    padding: 0;
+    list-style: none;
+}
+.aside ul li a {
+    color: white;
 }
 
 /* Colors per a la web */
