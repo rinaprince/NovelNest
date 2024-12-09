@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/factura/')]
+#[Route('/admin/factura')]
 final class FacturaController extends AbstractController
 {
     #[Route(name: 'app_factura_index', methods: ['GET'])]
     public function index(FacturaRepository $facturaRepository): Response
     {
-        return $this->render('factura_/index.html.twig', [
+        return $this->render('factura/index.html.twig', [
             'facturas' => $facturaRepository->findAll(),
         ]);
     }

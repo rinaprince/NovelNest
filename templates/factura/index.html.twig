@@ -1,37 +1,62 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_back.html.twig' %}
 
-{% block title %}Factura index{% endblock %}
+{% block title %}Gestionar Facturas{% endblock %}
 
 {% block body %}
-    <h1>Factura index</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class=" fs-3 py-5">Lista de facturas</h2>
+            </div>
+        </div>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Tipus</th>
-                <th>Num_factura</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for factura in facturas %}
-            <tr>
-                <td>{{ factura.id }}</td>
-                <td>{{ factura.tipus }}</td>
-                <td>{{ factura.numFactura }}</td>
-                <td>
-                    <a href="{{ path('app_factura_crontroller_show', {'id': factura.id}) }}">show</a>
-                    <a href="{{ path('app_factura_crontroller_edit', {'id': factura.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <form method="get" role="search" class="d-flex">
+                        <input type="search" class="form-control rounded-start-pill" name="q"
+                               aria-label="Search" placeholder="Bucar cliente...">
+                        <button type="submit" class="btn btn-rosa rounded-end-pill"><i class="bi bi-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_factura_crontroller_new') }}">Create new</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover text-center">
+                    <thead class="table-danger">
+                    <tr>
+                        <th>Id</th>
+                        <th>Tipus</th>
+                        <th>Num_factura</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for factura in facturas %}
+                        <tr>
+                            <td>{{ factura.id }}</td>
+                            <td>{{ factura.tipus }}</td>
+                            <td>{{ factura.numFactura }}</td>
+                            <td>
+                                <a class="btn btn-success" href="{{ path('app_factura_show', {'id': factura.id}) }}"><i
+                                            class="bi bi-eye"></i></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
