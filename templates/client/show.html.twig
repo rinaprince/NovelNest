@@ -1,62 +1,78 @@
 {% extends 'base_back.html.twig' %}
 
-{% block title %}Client{% endblock %}
+{% block title %}Mostar Cliente{% endblock %}
 
 {% block body %}
-    <h1>Client</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class=" fs-3 py-5">Viendo un cliente</h2>
+            </div>
+        </div>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ client.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom_usuari</th>
-                <td>{{ client.nomUsuari }}</td>
-            </tr>
-            <tr>
-                <th>Contrasenya</th>
-                <td>{{ client.contrasenya }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ client.nom }}</td>
-            </tr>
-            <tr>
-                <th>Cognom</th>
-                <td>{{ client.cognom }}</td>
-            </tr>
-            <tr>
-                <th>Correu</th>
-                <td>{{ client.correu }}</td>
-            </tr>
-            <tr>
-                <th>Rols</th>
-                <td>{{ client.rols ? client.rols|join(', ') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Telef</th>
-                <td>{{ client.telef }}</td>
-            </tr>
-            <tr>
-                <th>Direccio</th>
-                <td>{{ client.direccio }}</td>
-            </tr>
-            <tr>
-                <th>Num_tarj</th>
-                <td>{{ client.numTarj }}</td>
-            </tr>
-            <tr>
-                <th>Pseudonim</th>
-                <td>{{ client.pseudonim }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container d-flex justify-content-center text-center">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr class="d-none">
+                        <th>Id</th>
+                        <td>{{ client.id }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-warning">Nombre de usuario</th>
+                        <td>{{ client.nomUsuari }}</td>
+                    </tr>
+                    <tr class="d-none">
+                        <th>Contrasenya</th>
+                        <td>{{ client.contrasenya }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-warning">Nombre</th>
+                        <td>{{ client.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-warning">Apellido</th>
+                        <td>{{ client.cognom }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-warning">Correo</th>
+                        <td>{{ client.correu }}</td>
+                    </tr>
+                    <tr class="d-none">
+                        <th>Rols</th>
+                        <td>{{ client.rols ? client.rols|join(', ') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-warning">Teléfono</th>
+                        <td>{{ client.telef }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-warning">Dirección</th>
+                        <td>{{ client.direccio }}</td>
+                    </tr>
+                    <tr class="d-none">
+                        <th>Num_tarj</th>
+                        <td>{{ client.numTarj }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-warning">Seudónimo</th>
+                        <td>{{ client.pseudonim }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_client_index') }}">back to list</a>
+    <div class="container d-flex justify-content-center pt-5">
+        <div class="row">
+            <div class="col-12">
+                <a class="btn btn-rosa" href="{{ path('app_client_index') }}">Volver</a>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a>
-
-    {{ include('client/_delete_form.html.twig') }}
+    <!--{{ include('client/_delete_form.html.twig') }}-->
 {% endblock %}
