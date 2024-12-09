@@ -1,4 +1,41 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+<div class="container">
+    <div class="row">
+        <div class="col-6 mb-5">
+            {{ form_row(form.nom, {'label': 'Nombre de la obra', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-6 mb-5">
+            {{ form_row(form.tipus, {'label': 'Tipo', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-6 mb-5">
+            {{ form_row(form.pseudonim_client, {'Seudónimo cliente': 'Rol', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-2 mb-5">
+            {{ form_row(form.estat, {'label': 'Estado', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-2 mb-5">
+            {{ form_row(form.numObra_seguiment, {'label': 'Num. seg.', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-2 mb-5">
+            {{ form_row(form.factura, {'label': 'Factura', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-3 mb-5">
+            {{ form_row(form.portada, {'label': 'Portada', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-3 mb-5">
+            {{ form_row(form.url_arxiu, {'label': 'Archivo', 'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+</div>
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <a class="btn btn-rosa" href="{{ path('app_obra_index') }}">Volver</a>
+                <button class="btn btn-outline-success">{{ button_label|default('Actualizar') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
 {{ form_end(form) }}

@@ -51,7 +51,7 @@ class UserFixtures extends Fixture
             $client = new Client();
 
             // Tipo común para obra y factura
-            $tipus = $faker->randomElement(['relato corto', 'poesía', 'novela']);
+            $tipus = $faker->randomElement(['Relato corto', 'Poesía', 'Novela']);
 
             //1 Client estàtic (proves)
             if ($i == 0) {
