@@ -50,7 +50,7 @@ class UserFixtures extends Fixture
             //Clients
             $client = new Client();
 
-            // Tipo común para obra y factura
+            // Tipus comú per obra i factura
             $tipus = $faker->randomElement(['Relato corto', 'Poesía', 'Novela']);
 
             //1 Client estàtic (proves)
@@ -79,6 +79,7 @@ class UserFixtures extends Fixture
             $factura->setTipus($tipus);
             $factura->setNumFactura($faker->unique()->numerify('FAC###'));
             $client->setIdFactura($factura);
+            $factura->setClient($client);
 
             $manager->persist($factura);
             $manager->persist($client);

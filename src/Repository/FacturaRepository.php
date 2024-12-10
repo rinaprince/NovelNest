@@ -16,6 +16,15 @@ class FacturaRepository extends ServiceEntityRepository
         parent::__construct($registry, Factura::class);
     }
 
+    public function findFacturasWithClient(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->leftJoin('f.client', 'c')
+            ->addSelect('c')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Factura[] Returns an array of Factura objects
     //     */

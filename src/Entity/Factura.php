@@ -22,9 +22,10 @@ class Factura implements \JsonSerializable
     private ?string $num_factura = null;
 
     #[ORM\ManyToOne(inversedBy: 'id_Factura')]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private ?Client $client = null;
 
-    #[ORM\OneToMany(mappedBy: 'factura', targetEntity: Obra::class)]
+    #[ORM\OneToMany(mappedBy: 'factura', targetEntity: Obra::class, cascade: ['remove'])]
     private Collection $obres;
 
     public function __construct()

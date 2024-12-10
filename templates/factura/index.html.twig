@@ -46,7 +46,13 @@
                             <td class="d-none">{{ factura.id }}</td>
                             <td class="d-none">{{ factura.tipus }}</td>
                             <td>{{ factura.numFactura }}</td>
-                            <td>{{ factura.client ? factura.client.pseudonim : 'Sin cliente' }}</td>
+                            <td>
+                                {% if factura.client %}
+                                    {{ factura.client.pseudonim }}
+                                {% else %}
+                                    <span class="text-danger">Sin cliente</span>
+                                {% endif %}
+                            </td>
                             <td>
                                 {% for obra in factura.obres %}
                                     {{ obra.nom }}{% if not loop.last %}, {% endif %}
