@@ -18,7 +18,26 @@ class FacturaType extends AbstractType
             ->add('num_factura')
             ->add('client', EntityType::class, [
                 'class' => Client::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom_usuari',
+                'placeholder' => 'Selecciona un cliente',
+            ])
+            ->add('nom', EntityType::class, [
+                'class' => Client::class,
+                'choice_label' => 'nom',
+                'mapped' => false,
+                'placeholder' => 'Selecciona un nombre',
+            ])
+            ->add('cognom', EntityType::class, [
+                'class' => Client::class,
+                'choice_label' => 'cognom',
+                'mapped' => false,
+                'placeholder' => 'Selecciona un apellido',
+            ])
+            ->add('correu', EntityType::class, [
+                'class' => Client::class,
+                'choice_label' => 'correu',
+                'mapped' => false,
+                'placeholder' => 'Selecciona un correo',
             ])
         ;
     }

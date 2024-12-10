@@ -1,4 +1,35 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+<div class="container">
+    <div class="row">
+        <div class="col-3 mb-5">
+            {{ form_row(form.tipus, {'label': 'Tipo', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-3 mb-5">
+            {{ form_row(form.num_factura, {'label': 'Nº factura', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-3 mb-5">
+            {{ form_row(form.client, {'label': 'Nombre de usuario', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-3 mb-5">
+            {{ form_row(form.nom, {'label': 'Nombre', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-3 mb-5">
+            {{ form_row(form.cognom, {'label': 'Apellido', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-3 mb-5">
+            {{ form_row(form.correu, {'label': 'Correo', 'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+</div>
+{{ form_widget(form) }}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <a class="btn btn-rosa" href="{{ path('app_factura_index') }}">Volver</a>
+                <button class="btn btn-outline-success">{{ button_label|default('Actualizar') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
 {{ form_end(form) }}
