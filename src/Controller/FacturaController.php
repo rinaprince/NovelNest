@@ -30,6 +30,28 @@ final class FacturaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Obtindre dades del formulari
+            $factura = $form->getData();
+
+            // Recuperar entitat Obra
+            $obrasSeleccionadas = $form->get('nom')->getData();
+
+            // Obtindre info client
+            $client = $factura->getClient();
+
+            // Obtindre camps no mapejats
+            $cognom = $request->request->get('factura')['cognom'];
+            $correu = $request->request->get('factura')['correu'];
+
+            // Assignació no temporal
+            $factura->setCognom($cognom);
+            $factura->setCorreu($correu);
+
+            // Obres amb factures
+            foreach ($obrasSeleccionadas as $obra) {
+                $factura->addObra($obra);
+            }
+
             $entityManager->persist($factura);
             $entityManager->flush();
 

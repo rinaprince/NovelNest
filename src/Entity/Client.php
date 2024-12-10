@@ -20,7 +20,7 @@ class Client extends User implements \JsonSerializable
     private ?string $num_tarj = null;
 
     #[ORM\ManyToOne(inversedBy: 'autor')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Factura $id_Factura = null;
 
     #[ORM\Column(length: 50, unique: true)]

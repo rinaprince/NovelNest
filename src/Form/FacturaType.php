@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Client;
 use App\Entity\Factura;
+use App\Entity\Obra;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,17 +16,19 @@ class FacturaType extends AbstractType
     {
         $builder
             ->add('tipus')
+            ->add('nom', EntityType::class, [
+                'class' => Obra::class,
+                'choice_label' => 'nom',
+                'multiple' => true,
+                'expanded' => false,
+                'mapped' => false,
+                'placeholder' => 'Selecciona una obra',
+            ])
             ->add('num_factura')
             ->add('client', EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => 'nom_usuari',
                 'placeholder' => 'Selecciona un cliente',
-            ])
-            ->add('nom', EntityType::class, [
-                'class' => Client::class,
-                'choice_label' => 'nom',
-                'mapped' => false,
-                'placeholder' => 'Selecciona un nombre',
             ])
             ->add('cognom', EntityType::class, [
                 'class' => Client::class,

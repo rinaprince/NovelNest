@@ -25,6 +25,15 @@ class FacturaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findFacturasWithObras(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->leftJoin('f.obra', 'o')
+            ->addSelect('o')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Factura[] Returns an array of Factura objects
     //     */
