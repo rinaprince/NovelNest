@@ -20,10 +20,10 @@
                            href="{{ path('app_contacte') }}">Contacto</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Autopublicación</a>
+                        <a class="nav-link {{ app.request.attributes.get('_route') == 'app_autopublicacio' ? 'active' : '' }}" href="{{ path('app_autopublicacio') }}">Autopublicación</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Biblioteca</a>
+                    <li class="nav-item {{ app.request.attributes.get('_route') == 'app_biblioteca' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ path('app_biblioteca') }}">Biblioteca</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ app.request.attributes.get('_route') == 'app_editors' ? 'active' : '' }}"
