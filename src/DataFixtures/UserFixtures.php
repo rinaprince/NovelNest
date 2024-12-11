@@ -50,7 +50,7 @@ class UserFixtures extends Fixture
             //Clients
             $client = new Client();
 
-            // Tipus comú per obra i factura
+            //Tipus comú per obra i factura
             $tipus = $faker->randomElement(['Relato corto', 'Poesía', 'Novela']);
 
             //1 Client estàtic (proves)
@@ -74,18 +74,22 @@ class UserFixtures extends Fixture
             $client->setDireccio($faker->address());
             $client->setNumTarj($faker->creditCardNumber());
 
-            //Factures
-            $factura = new Factura();
-            $factura->setTipus($tipus);
-            $factura->setNumFactura($faker->unique()->numerify('FAC###'));
-            $client->setIdFactura($factura);
-            $factura->setClient($client);
-
-            $manager->persist($factura);
             $manager->persist($client);
 
-            //Obres
-            for ($j = 0; $j < rand(1, 3); $j++) {
+            //1/3 obres per a cada client
+            $numObras = rand(1, 3);
+            for ($j = 0; $j < $numObras; $j++) {
+                //1 factura per a cada obra
+                $factura = new Factura();
+                $factura->setTipus($tipus);
+                $factura->setNumFactura($faker->unique()->numerify('FAC###'));
+                $factura->setPreu($faker->randomFloat(2, 10, 1000));
+                $factura->setQuantitat($faker->numberBetween(1, 100));
+                $factura->setClient($client);
+                $client->setIdFactura($factura);
+                $manager->persist($factura);
+
+                //Crear obres
                 $obra = new Obra();
                 $obra->setTipus($tipus);
                 $obra->setNom($faker->sentence(3));

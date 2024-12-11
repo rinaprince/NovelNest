@@ -21,6 +21,12 @@ class Factura implements \JsonSerializable
     #[ORM\Column(length: 255)]
     private ?string $num_factura = null;
 
+    #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
+    private ?float $preu = null;
+
+    #[ORM\Column(type: "integer")]
+    private ?int $quantitat = null;
+
     #[ORM\ManyToOne(inversedBy: 'id_Factura')]
     #[ORM\JoinColumn(onDelete: "CASCADE")]
     private ?Client $client = null;
@@ -58,6 +64,26 @@ class Factura implements \JsonSerializable
     {
         $this->num_factura = $num_factura;
         return $this;
+    }
+
+    public function getPreu(): ?float
+    {
+        return $this->preu;
+    }
+
+    public function setPreu(?float $preu): void
+    {
+        $this->preu = $preu;
+    }
+
+    public function getQuantitat(): ?int
+    {
+        return $this->quantitat;
+    }
+
+    public function setQuantitat(?int $quantitat): void
+    {
+        $this->quantitat = $quantitat;
     }
 
     public function getClient(): ?Client
@@ -103,6 +129,8 @@ class Factura implements \JsonSerializable
             "id" => $this->getId(),
             "tipus" => $this->getTipus(),
             "num_factura" => $this->getNumFactura(),
+            "preu" => $this->getPreu(),
+            "quantitat" => $this->getQuantitat(),
             "client" => $this->getClient()?->getId(),
             "obres" => $this->getObres()->map(fn($obra) => $obra->jsonSerialize())->toArray(),
         ];
