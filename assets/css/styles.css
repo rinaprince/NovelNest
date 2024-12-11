@@ -157,3 +157,17 @@ h2{
 .active {
     font-weight: bold;
 }
+
+/* Paginador */
+a.page-link{
+    color: black;
+}
+
+a.page-link:hover{
+    color: #2b2b2b;
+}
+
+.active > .page-link{
+    background-color: #ffac77 !important;
+    border: #ffac77 !important;
+}

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -40,4 +41,21 @@ class UserRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findAllQuery(): Query
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ;
+    }
+
+    public function findByTextQuery(string $value): Query
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('s.cognom LIKE :val')
+            ->setParameter('val', "%$value%")
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ;
+    }
 }

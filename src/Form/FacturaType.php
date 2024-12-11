@@ -42,6 +42,8 @@ class FacturaType extends AbstractType
                 'mapped' => false,
                 'placeholder' => 'Selecciona un correo',
             ])
+            ->add('preu')
+            ->add('quantitat')
         ;
     }
 
