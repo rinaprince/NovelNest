@@ -10,6 +10,10 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+body{
+    background-color: #ffffff;
+}
+
 /* Font h2 */
 @font-face {
     font-family: 'Montserrat-Medium';
