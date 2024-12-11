@@ -26,7 +26,13 @@
                     <label for="password" class="mb-4"><strong>Contraseña:</strong></label>
                     <input class="form-control" type="password" id="password" name="_password"> <br>
 
-                    <button type="submit" class="btn btn-blau">Entrar</button>
+                    <div class="container d-flex justify-content-center pt-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-blau">Entrar</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -35,7 +41,7 @@
     <div class="container d-flex justify-content-center py-5">
         <div class="row">
             <div class="col-12">
-                <a href="#" class="mt-5">¿No tienes una cuenta? ¡Regístrate aquí!</a>
+                <a href="{{ path('app_registre') }}" class="mt-5">¿No tienes una cuenta? ¡Regístrate aquí!</a>
             </div>
         </div>
     </div>
