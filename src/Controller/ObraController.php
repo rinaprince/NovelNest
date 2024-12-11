@@ -22,7 +22,7 @@ final class ObraController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/new', name: 'app_obra_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_obra_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $obra = new Obra();
@@ -42,7 +42,7 @@ final class ObraController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}', name: 'app_obra_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_obra_show', methods: ['GET'])]
     public function show(Obra $obra): Response
     {
         return $this->render('obra/show.html.twig', [
@@ -50,7 +50,7 @@ final class ObraController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}/edit', name: 'app_obra_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_obra_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Obra $obra, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ObraType::class, $obra);
@@ -68,7 +68,7 @@ final class ObraController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}/delete', name: 'app_obra_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_obra_delete', methods: ['POST'])]
     public function delete(Request $request, Obra $obra, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$obra->getId(), $request->getPayload()->getString('_token'))) {

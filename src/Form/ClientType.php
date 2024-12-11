@@ -21,6 +21,7 @@ class ClientType extends AbstractType
                 'label' => 'Contraseña',
                 'attr' => ['class' => 'form-control'],
                 'required' => false,
+                'mapped' => false,
             ])
             ->add('nom')
             ->add('cognom')

@@ -22,7 +22,7 @@ final class FacturaController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/new', name: 'app_factura_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_factura_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $factura = new Factura();
@@ -64,7 +64,7 @@ final class FacturaController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}', name: 'app_factura_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_factura_show', methods: ['GET'])]
     public function show(Factura $factura): Response
     {
         return $this->render('factura/show.html.twig', [
@@ -72,7 +72,7 @@ final class FacturaController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}/edit', name: 'app_factura_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_factura_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Factura $factura, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(FacturaType::class, $factura);
@@ -90,7 +90,7 @@ final class FacturaController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}/delete', name: 'app_factura_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_factura_delete', methods: ['POST'])]
     public function delete(Request $request, Factura $factura, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$factura->getId(), $request->getPayload()->getString('_token'))) {
