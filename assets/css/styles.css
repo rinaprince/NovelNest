@@ -175,3 +175,9 @@ a.page-link:hover{
     background-color: #ffac77 !important;
     border: #ffac77 !important;
 }
+
+/* Chart */
+.tamano{
+    width: 20% !important;
+    height: 20% !important;
+}

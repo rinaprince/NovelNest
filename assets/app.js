@@ -14,6 +14,7 @@ import 'bootstrap';
 import '@popperjs/core';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './css/styles.css';
+import './bootstrap.js';
 
 // assets/app.js
 
