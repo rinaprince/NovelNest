@@ -6,6 +6,7 @@ use App\Entity\Factura;
 use App\Form\FacturaType;
 use App\Repository\FacturaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,26 @@ use Symfony\Component\Routing\Attribute\Route;
 final class FacturaController extends AbstractController
 {
     #[Route(name: 'app_factura_index', methods: ['GET'])]
-    public function index(FacturaRepository $facturaRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator, FacturaRepository $facturaRepository): Response
     {
+        /* Paginador i cercador */
+        $q = $request->query->get('q', '');
+
+        if (empty($q))
+            $query = $facturaRepository->findAllQuery();
+        else
+            $query = $facturaRepository->findByTextQuery($q);
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            15
+        );
+
         return $this->render('factura/index.html.twig', [
-            'facturas' => $facturaRepository->findAll(),
+            'q' => $q,
+            'pagination' => $pagination,
+            'facturas' => $pagination->getItems(),
         ]);
     }
 

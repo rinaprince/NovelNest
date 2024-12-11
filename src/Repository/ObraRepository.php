@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Obra;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -40,4 +41,21 @@ class ObraRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findAllQuery(): Query
+    {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.id', 'ASC')
+            ->getQuery()
+            ;
+    }
+
+    public function findByTextQuery(string $value): Query
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.nom LIKE :val')
+            ->setParameter('val', "%$value%")
+            ->orderBy('o.id', 'ASC')
+            ->getQuery()
+            ;
+    }
 }

@@ -36,7 +36,7 @@ final class UserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'q' => $q,
             'pagination' => $pagination,
-            'users' => $userRepository->findAll(),
+            'users' => $pagination->getItems(),
         ]);
     }
 

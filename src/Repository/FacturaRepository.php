@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Factura;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -58,4 +59,21 @@ class FacturaRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findAllQuery(): Query
+    {
+        return $this->createQueryBuilder('f')
+            ->orderBy('f.id', 'ASC')
+            ->getQuery()
+            ;
+    }
+
+    public function findByTextQuery(string $value): Query
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.num_factura LIKE :val')
+            ->setParameter('val', "%$value%")
+            ->orderBy('f.id', 'ASC')
+            ->getQuery()
+            ;
+    }
 }

@@ -6,6 +6,7 @@ use App\Entity\Obra;
 use App\Form\ObraType;
 use App\Repository\ObraRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,26 @@ use Symfony\Component\Routing\Attribute\Route;
 final class ObraController extends AbstractController
 {
     #[Route(name: 'app_obra_index', methods: ['GET'])]
-    public function index(ObraRepository $obraRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator, ObraRepository $obraRepository): Response
     {
+        /* Paginador i cercador */
+        $q = $request->query->get('q', '');
+
+        if (empty($q))
+            $query = $obraRepository->findAllQuery();
+        else
+            $query = $obraRepository->findByTextQuery($q);
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            15
+        );
+
         return $this->render('obra/index.html.twig', [
-            'obras' => $obraRepository->findAll(),
+            'q' => $q,
+            'pagination' => $pagination,
+            'obras' => $pagination->getItems(),
         ]);
     }
 

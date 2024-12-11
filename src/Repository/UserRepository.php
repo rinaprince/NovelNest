@@ -52,7 +52,7 @@ class UserRepository extends ServiceEntityRepository
     public function findByTextQuery(string $value): Query
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('s.cognom LIKE :val')
+            ->andWhere('u.cognom LIKE :val')
             ->setParameter('val', "%$value%")
             ->orderBy('u.id', 'ASC')
             ->getQuery()
