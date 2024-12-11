@@ -1,3 +1,4 @@
+import { registerVueControllerComponents } from '@symfony/ux-vue';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -13,3 +14,7 @@ import 'bootstrap';
 import '@popperjs/core';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './css/styles.css';
+
+// assets/app.js
+
+registerVueControllerComponents(require.context('./vue/controllers', true, /\.vue$/));
