@@ -4,7 +4,7 @@ export const prepareChartData = (users) => {
     const initialsCount = {};
 
     users.forEach(user => {
-        const initial = user.nom.charAt(0).toUpperCase();
+        const initial = user.nom_usuari.charAt(0).toUpperCase();
         if (initialsCount[initial]) {
             initialsCount[initial]++;
         } else {
@@ -23,9 +23,7 @@ export const prepareChartData = (users) => {
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(0, 255, 255, 0.2)'
+                'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -33,9 +31,7 @@ export const prepareChartData = (users) => {
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(255, 205, 86, 1)',
-                'rgba(0, 255, 255, 1)'
+                'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
         }]
@@ -55,7 +51,7 @@ export const renderChart = (data) => {
                 },
                 title: {
                     display: true,
-                    text: 'Usuarios por inicial'
+                    text: 'Usuarios por Inicial'
                 }
             }
         }

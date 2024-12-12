@@ -9,4 +9,4 @@ export const app = startStimulusApp(require.context(
 
 // console.log('Stimulus is being loaded');
 // register any custom, 3rd party controllers here
-// app.register('some_controller_name', SomeImportedController);
+//console.log('Stimulus is being loaded');
