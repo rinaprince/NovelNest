@@ -1,20 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ResumController!{% endblock %}
+{% block title %}Total{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class=" fs-3 py-5">Resumen de la compra</h2>
+            </div>
+        </div>
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container d-flex justify-content-center">
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Nombre: Marina</h5>
+                            <p class="card-text"><strong>Apellido:</strong> Checa</p>
+                            <p class="card-text"><strong>Teléfono:</strong> 612345678</p>
+                            <p class="card-text"><strong>Dirección:</strong> Calle Falsa 123</p>
+                            <p class="card-text"><strong>Número de Tarjeta:</strong> 1234 5678 9012 3456</p>
+                        </div>
+                    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/html/src/Controller/ResumController.php</code></li>
-        <li>Your template at <code>/var/www/html/templates/resum/index.html.twig</code></li>
-    </ul>
-</div>
+                    <div class="d-flex justify-content-center mt-5">
+                        <a href="{{ path('app_home') }}" class="btn btn-success">Aceptar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
