@@ -58,4 +58,12 @@ class ObraRepository extends ServiceEntityRepository
             ->getQuery()
             ;
     }
+
+    public function save(Obra $obra, bool $flush = false): void
+    {
+        $this->_em->persist($obra);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
 }

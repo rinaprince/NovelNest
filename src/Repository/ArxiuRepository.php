@@ -40,4 +40,12 @@ class ArxiuRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function save(Arxiu $arxiu, bool $flush = true)
+    {
+        $this->getEntityManager()->persist($arxiu);
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }
