@@ -11,6 +11,8 @@
             </div>
             <div class="col-12 d-flex justify-content-center">
                 <h3 class="fs-5 pb-3">Información</h3>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
                 <ol>
                     <li>
                         En esta página puedes subir tu obra literaria y elegir el formato de publicación.
@@ -29,6 +31,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
+                <h3 class="fs-5 pt-5 pb-3">¡Empieza subiendo tu archivo!</h3>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
                 {% if mensaje %}
                     <div class="alert alert-info">{{ mensaje }}</div>
                 {% endif %}
@@ -38,9 +43,13 @@
                         <label for="pdf">Selecciona un archivo PDF:</label>
                         <input type="file" name="pdf" id="pdf" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Subir</button>
+                    <div class="col-12 d-flex justify-content-center py-5">
+                        <button type="submit" class="btn btn-rosa">Subir</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <div {{ vue_component('Autopubli_component') }}></div>
 {% endblock %}
