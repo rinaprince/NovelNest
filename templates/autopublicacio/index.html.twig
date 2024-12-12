@@ -53,9 +53,12 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-12 text-center">
-            <h3 class="fs-5 pt-5 pb-3">¡Elige tu maquetación!</h3>
+        <div class="col-12">
+            <h3 class="fs-5 pt-5 pb-3 text-center">¡Elige tu maquetación!</h3>
             <div {{ vue_component('Autopubli_component') }}></div>
+            <div class="col-12 d-flex justify-content-center py-5">
+                <button type="submit" class="btn btn-warning">Comprar</button>
+            </div>
         </div>
     </div>
 </div>
