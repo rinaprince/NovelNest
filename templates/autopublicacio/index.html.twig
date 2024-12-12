@@ -4,17 +4,43 @@
 
 {% block body %}
 
-    <h1>Subir PDF</h1>
-
-    {% if mensaje %}
-        <div class="alert alert-info">{{ mensaje }}</div>
-    {% endif %}
-
-    <form method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="pdf">Selecciona un archivo PDF:</label>
-            <input type="file" name="pdf" id="pdf" class="form-control" required>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class=" fs-3 py-5">Autopublicar</h2>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+                <h3 class="fs-5 pb-3">Información</h3>
+                <ol>
+                    <li>
+                        En esta página puedes subir tu obra literaria y elegir el formato de publicación.
+                    </li>
+                    <li>
+                        Solo puedes subir archivos si estás registrado/a.
+                    </li>
+                    <li>
+                        Elige la cantidad de obras para autopublicar, el mínimo es de 1.
+                    </li>
+                </ol>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Subir</button>
-    </form>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                {% if mensaje %}
+                    <div class="alert alert-info">{{ mensaje }}</div>
+                {% endif %}
+
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="pdf">Selecciona un archivo PDF:</label>
+                        <input type="file" name="pdf" id="pdf" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Subir</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
