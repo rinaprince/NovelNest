@@ -83,7 +83,7 @@ class AutopublicacioController extends AbstractController
                 }
             }
         } else {
-            $mensaje = 'Faltan datos en el formulario.';
+            $mensaje = '';
         }
 
         return $this->render('autopublicacio/index.html.twig', [
