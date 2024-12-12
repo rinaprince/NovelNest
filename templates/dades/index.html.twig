@@ -1,20 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DadesController!{% endblock %}
+{% block title %}Datos{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class=" fs-3 py-5">Datos de compra</h2>
+            </div>
+        </div>
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container d-flex justify-content-center">
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nom" name="nom" required>
+                        </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/html/src/Controller/DadesController.php</code></li>
-        <li>Your template at <code>/var/www/html/templates/dades/index.html.twig</code></li>
-    </ul>
-</div>
+                        <div class="mb-3">
+                            <label for="cognom" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="cognom" name="cognom" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="telef" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="telef" name="telef">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="direccio" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccio" name="direccio">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="num_tarj" class="form-label">Número de Tarjeta</label>
+                            <input type="text" class="form-control" id="num_tarj" name="num_tarj">
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-5">
+                            <a href="{{ path('app_resum') }}" class="btn btn-rosa">Enviar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
