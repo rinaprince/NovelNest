@@ -73,9 +73,11 @@
         <div class="col-12">
             <h3 class="fs-5 pt-5 pb-3 text-center">¡Elige tu maquetación!</h3>
             <div {{ vue_component('Autopubli_component') }}></div>
-            <div class="col-12 d-flex justify-content-center py-5">
-                <a href="{{ path('app_dades') }}" type="submit" class="btn btn-warning">Comprar</a>
-            </div>
+            {% if app.user and ('ROLE_TREBALLADOR' in app.user.roles or 'ROLE_CLIENT' in app.user.roles) %}
+                <div class="col-12 d-flex justify-content-center py-5">
+                    <a href="{{ path('app_dades') }}" type="submit" class="btn btn-warning">Comprar</a>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
