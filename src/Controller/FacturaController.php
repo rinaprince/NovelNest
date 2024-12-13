@@ -57,9 +57,11 @@ final class FacturaController extends AbstractController
             $client = $factura->getClient();
 
             // Obtindre camps no mapejats
+            $cognom = $request->request->get('factura')['cognom'];
             $correu = $request->request->get('factura')['correu'];
 
             // Assignació no temporal
+            $factura->setCognom($cognom);
             $factura->setCorreu($correu);
 
             // Obres amb factures

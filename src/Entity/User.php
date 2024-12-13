@@ -40,6 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $nom = null;
 
+    #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "El apellido no puede estar vacío.")]
     #[Assert\Length(
         max: 50,

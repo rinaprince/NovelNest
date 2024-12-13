@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client extends User implements \JsonSerializable
 {
+    #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: 'El teléfono no puede estar vacío.')]
     #[Assert\Regex(
         pattern: '/^\+?\d{7,15}$/',

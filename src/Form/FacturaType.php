@@ -30,6 +30,12 @@ class FacturaType extends AbstractType
                 'choice_label' => 'nom_usuari',
                 'placeholder' => 'Selecciona un cliente',
             ])
+            ->add('cognom', EntityType::class, [
+                'class' => Client::class,
+                'choice_label' => 'cognom',
+                'mapped' => false,
+                'placeholder' => 'Selecciona un apellido',
+            ])
             ->add('correu', EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => 'correu',
