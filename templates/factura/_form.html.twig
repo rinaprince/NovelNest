@@ -2,22 +2,25 @@
 <div class="container">
     <div class="row">
         <div class="col-3 mb-5">
-            {{ form_row(form.tipus, {'label': 'Tipo', 'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.tipus, {'label': 'Tipo'}) }}
         </div>
         <div class="col-3 mb-5">
-            {{ form_row(form.num_factura, {'label': 'Nº factura', 'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.num_factura, {'label': 'Nº factura'}) }}
         </div>
         <div class="col-3 mb-5">
-            {{ form_row(form.nom, {'label': 'Título', 'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.nom, {'label': 'Título'}) }}
         </div>
         <div class="col-3 mb-5">
-            {{ form_row(form.client, {'label': 'Nombre de usuario', 'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.client, {'label': 'Nombre de usuario'}) }}
         </div>
         <div class="col-3 mb-5">
-            {{ form_row(form.cognom, {'label': 'Apellido', 'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.correu, {'label': 'Correo'}) }}
         </div>
         <div class="col-3 mb-5">
-            {{ form_row(form.correu, {'label': 'Correo', 'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.preu, {'label': 'Preu'}) }}
+        </div>
+        <div class="col-3 mb-5">
+            {{ form_row(form.quantitat, {'label': 'Quantitat'}) }}
         </div>
     </div>
 </div>

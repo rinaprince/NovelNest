@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ObraRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ObraRepository::class)]
 class Obra implements \JsonSerializable
@@ -14,26 +15,43 @@ class Obra implements \JsonSerializable
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "El tipus no puede estar vacío.")]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: "El tipus no puede tener más de {{ limit }} caracteres."
+    )]
     private ?string $tipus = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "El nom no puede estar vacío.")]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: "El nom no puede tener más de {{ limit }} caracteres."
+    )]
     private ?string $nom = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "El número de seguimiento no puede ser nulo.")]
+    #[Assert\Positive(message: "El número de seguimiento debe ser positivo.")]
     private ?int $numObra_seguiment = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "El estado no puede ser nulo.")]
     private ?bool $estat = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'obres')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "El pseudónimo del cliente es obligatorio.")]
     private ?Client $pseudonim_client = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Url(message: "La portada debe ser una URL válida.")]
     private ?string $portada = null;
 
     #[ORM\ManyToOne(inversedBy: 'num_Obra')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "El archivo URL es obligatorio.")]
     private ?Arxiu $url_arxiu = null;
 
     #[ORM\ManyToOne(inversedBy: 'obra')]

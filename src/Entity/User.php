@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\InheritanceType("JOINED")]
@@ -19,22 +20,44 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: "El nombre de usuario no puede estar vacío.")]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: "El nombre de usuario no puede tener más de 50 caracteres."
+    )]
     #[ORM\Column(length: 50)]
     private ?string $nom_usuari = null;
 
+    #[Assert\NotBlank(message: "La contraseña no puede estar vacía.")]
     #[ORM\Column(length: 255)]
     private ?string $contrasenya = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "El nombre no puede estar vacío.")]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: "El nombre no puede tener más de 50 caracteres."
+    )]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "El apellido no puede estar vacío.")]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: "El apellido no puede tener más de 50 caracteres."
+    )]
     private ?string $cognom = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "El correo no puede estar vacío.")]
+    #[Assert\Email(message: "Por favor, introduce un correo válido.")]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: "El correo no puede tener más de 50 caracteres."
+    )]
     private ?string $correu = null;
 
     #[ORM\Column(type: Types::JSON)]
+    #[Assert\NotNull(message: "El rol no puede estar vacío.")]
     private array $rols = [];
 
     public function getId(): ?int
