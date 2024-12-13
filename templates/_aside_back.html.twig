@@ -38,7 +38,7 @@
                 Facturas
             </a>
         </li>
-        {% if is_granted('ROLE_TREBALLADOR') %}
+        {% if app.user and 'ROLE_TREBALLADOR' in app.user.roles %}
             <li class="pb-3 {{ app.request.attributes.get('_route') == 'app_autopublicacio' ? 'active' : '' }}">
                 <i class="bi bi-vector-pen"></i>
                 <a href="{{ path('app_autopublicacio') }}"
