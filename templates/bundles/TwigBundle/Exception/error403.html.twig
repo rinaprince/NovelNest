@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}403 - Error{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12 p-5">
+            <h3 class="display-1 text-danger text-center">Error 403 - Permiso denegado</h3>
+            <p class="text-center fs-2">No tienes los permisos necesarios para acceder a esta página.</p>
+            <div class="position-relative d-flex justify-content-center">
+                <i class="bi bi-sign-do-not-enter display-1 text-danger"></i>
+            </div>
+        </div>
+    </div>
+{% endblock %}

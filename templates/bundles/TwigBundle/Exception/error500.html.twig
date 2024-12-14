@@ -1,0 +1,15 @@
+{% extends 'base_2.html.twig' %}
+
+{% block title %}500 - Error{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12 p-5">
+            <h3 class="display-3 text-danger text-center">Error 500 - Error desconocido</h3>
+            <p class="text-center fs-2">La solicitud hha producido un error, comunícalo al administrador.</p>
+            <div class="position-relative d-flex justify-content-center">
+                <i class="bi bi-sign-dead-end-fill text-danger display-1"></i>
+            </div>
+        </div>
+    </div>
+{% endblock %}
