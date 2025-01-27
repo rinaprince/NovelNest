@@ -28,8 +28,8 @@ security:
         ROLE_CLIENT: []
 
     access_control:
-        - { path: ^/, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_TREBALLADOR }
+        - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
