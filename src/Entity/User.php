@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\InheritanceType("JOINED")]
 #[ORM\DiscriminatorColumn(name: "rol", type: "string")]
 #[ORM\DiscriminatorMap(["user" => User::class, "admin" => Administrador::class, "treballador" => Treballador::class, "client" => Client::class])]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -163,5 +164,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->getNomUsuari();
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return[
+            "id" => $this->getId(),
+            "nom_usuari" => $this->getNomUsuari(),
+            "nom" => $this->getNom(),
+            "cognom" => $this->getCognom(),
+            "correu" => $this->getCorreu(),
+            "rols" => $this->getRols(),
+        ];
     }
 }
