@@ -16,45 +16,38 @@ class Obra implements \JsonSerializable
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "El tipus no puede estar vacío.")]
-    #[Assert\Length(
-        max: 50,
-        maxMessage: "El tipus no puede tener más de {{ limit }} caracteres."
-    )]
+    #[Assert\Length(max: 50, maxMessage: "El tipus no puede tener más de {{ limit }} caracteres.")]
     private ?string $tipus = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "El nom no puede estar vacío.")]
-    #[Assert\Length(
-        max: 50,
-        maxMessage: "El nom no puede tener más de {{ limit }} caracteres."
-    )]
+    #[Assert\Length(max: 50, maxMessage: "El nom no puede tener más de {{ limit }} caracteres.")]
     private ?string $nom = null;
 
     #[ORM\Column]
     #[Assert\NotNull(message: "El número de seguimiento no puede ser nulo.")]
     #[Assert\Positive(message: "El número de seguimiento debe ser positivo.")]
-    private ?int $numObra_seguiment = null;
+    private ?int $num_obra_seguiment = null;
 
     #[ORM\Column]
     #[Assert\NotNull(message: "El estado no puede ser nulo.")]
     private ?bool $estat = null;
 
-
     #[ORM\ManyToOne(inversedBy: 'obres')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotNull(message: "El pseudónimo del cliente es obligatorio.")]
-    private ?Client $pseudonim_client = null;
+    #[Assert\NotNull(message: "El cliente es obligatorio.")]
+    private ?Client $client = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Url(message: "La portada debe ser una URL válida.")]
     private ?string $portada = null;
 
-    #[ORM\ManyToOne(inversedBy: 'num_Obra')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: "El archivo URL es obligatorio.")]
     private ?Arxiu $url_arxiu = null;
 
-    #[ORM\ManyToOne(inversedBy: 'obra')]
+    #[ORM\ManyToOne(inversedBy: 'obres')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Factura $factura = null;
 
@@ -63,20 +56,15 @@ class Obra implements \JsonSerializable
         return $this->id;
     }
 
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-        return $this;
-    }
-
     public function getTipus(): ?string
     {
         return $this->tipus;
     }
 
-    public function setTipus(?string $tipus): void
+    public function setTipus(?string $tipus): static
     {
         $this->tipus = $tipus;
+        return $this;
     }
 
     public function getNom(): ?string
@@ -84,7 +72,7 @@ class Obra implements \JsonSerializable
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(?string $nom): static
     {
         $this->nom = $nom;
         return $this;
@@ -92,12 +80,12 @@ class Obra implements \JsonSerializable
 
     public function getNumObraSeguiment(): ?int
     {
-        return $this->numObra_seguiment;
+        return $this->num_obra_seguiment;
     }
 
-    public function setNumObraSeguiment(int $numObra_seguiment): static
+    public function setNumObraSeguiment(?int $num_obra_seguiment): static
     {
-        $this->numObra_seguiment = $numObra_seguiment;
+        $this->num_obra_seguiment = $num_obra_seguiment;
         return $this;
     }
 
@@ -106,20 +94,20 @@ class Obra implements \JsonSerializable
         return $this->estat;
     }
 
-    public function setEstat(bool $estat): static
+    public function setEstat(?bool $estat): static
     {
         $this->estat = $estat;
         return $this;
     }
 
-    public function getPseudonimClient(): ?Client
+    public function getClient(): ?Client
     {
-        return $this->pseudonim_client;
+        return $this->client;
     }
 
-    public function setPseudonimClient(?Client $pseudonim_client): static
+    public function setClient(?Client $client): static
     {
-        $this->pseudonim_client = $pseudonim_client;
+        $this->client = $client;
         return $this;
     }
 
@@ -128,7 +116,7 @@ class Obra implements \JsonSerializable
         return $this->portada;
     }
 
-    public function setPortada(string $portada): static
+    public function setPortada(?string $portada): static
     {
         $this->portada = $portada;
         return $this;
@@ -150,7 +138,7 @@ class Obra implements \JsonSerializable
         return $this->factura;
     }
 
-    public function setFactura(Factura $factura): static
+    public function setFactura(?Factura $factura): static
     {
         $this->factura = $factura;
         return $this;
@@ -164,7 +152,7 @@ class Obra implements \JsonSerializable
             "nom" => $this->getNom(),
             "num_obra_seguiment" => $this->getNumObraSeguiment(),
             "estat" => $this->isEstat(),
-            "pseudonim_client" => $this->getPseudonimClient()?->getId(),
+            "client" => $this->getClient()?->getId(),
             "portada" => $this->getPortada(),
             "url_arxiu" => $this->getUrlArxiu()?->getId(),
             "factura" => $this->getFactura()?->getId(),

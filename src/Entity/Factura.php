@@ -27,7 +27,7 @@ class Factura implements \JsonSerializable
     #[ORM\Column(type: "integer")]
     private ?int $quantitat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id_Factura')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(onDelete: "CASCADE")]
     private ?Client $client = null;
 
@@ -44,15 +44,19 @@ class Factura implements \JsonSerializable
         return $this->id;
     }
 
+    public function getObres(): Collection
+    {
+        return $this->obres;
+    }
+
     public function getTipus(): ?string
     {
         return $this->tipus;
     }
 
-    public function setTipus(string $tipus): static
+    public function setTipus(?string $tipus): void
     {
         $this->tipus = $tipus;
-        return $this;
     }
 
     public function getNumFactura(): ?string
@@ -60,10 +64,9 @@ class Factura implements \JsonSerializable
         return $this->num_factura;
     }
 
-    public function setNumFactura(string $num_factura): static
+    public function setNumFactura(?string $num_factura): void
     {
         $this->num_factura = $num_factura;
-        return $this;
     }
 
     public function getPreu(): ?float
@@ -91,48 +94,21 @@ class Factura implements \JsonSerializable
         return $this->client;
     }
 
-    public function setClient(?Client $client): static
+    public function setClient(?Client $client): void
     {
         $this->client = $client;
-        return $this;
-    }
-
-    public function getObres(): Collection
-    {
-        return $this->obres;
-    }
-
-    public function addObra(Obra $obra): static
-    {
-        if (!$this->obres->contains($obra)) {
-            $this->obres[] = $obra;
-            $obra->setFactura($this);
-        }
-
-        return $this;
-    }
-
-    public function removeObra(Obra $obra): static
-    {
-        if ($this->obres->removeElement($obra)) {
-            if ($obra->getFactura() === $this) {
-                $obra->setFactura(null);
-            }
-        }
-
-        return $this;
     }
 
     public function jsonSerialize(): mixed
     {
         return [
             "id" => $this->getId(),
-            "tipus" => $this->getTipus(),
-            "num_factura" => $this->getNumFactura(),
-            "preu" => $this->getPreu(),
-            "quantitat" => $this->getQuantitat(),
-            "client" => $this->getClient()?->getId(),
-            "obres" => $this->getObres()->map(fn($obra) => $obra->jsonSerialize())->toArray(),
+            "tipus" => $this->tipus,
+            "num_factura" => $this->num_factura,
+            "preu" => $this->preu,
+            "quantitat" => $this->quantitat,
+            "client" => $this->client?->getId(),
+            "obres" => $this->obres->map(fn($obra) => $obra->jsonSerialize())->toArray(),
         ];
     }
 }
