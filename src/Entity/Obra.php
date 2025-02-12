@@ -111,6 +111,17 @@ class Obra implements \JsonSerializable
         return $this;
     }
 
+    public function getPseudonimClient(): ?string
+    {
+        return $this->pseudonimClient;
+    }
+
+    public function setPseudonimClient(?string $pseudonimClient): self
+    {
+        $this->pseudonimClient = $pseudonimClient;
+        return $this;
+    }
+
     public function getPortada(): ?string
     {
         return $this->portada;

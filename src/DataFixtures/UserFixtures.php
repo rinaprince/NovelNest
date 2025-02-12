@@ -82,6 +82,7 @@ class UserFixtures extends Fixture
                 $factura->setPreu($faker->randomFloat(2, 10, 1000));
                 $factura->setQuantitat($faker->numberBetween(1, 100));
                 $factura->setClient($client);
+                $client->setIdFactura($factura);
                 $manager->persist($factura);
 
                 // Crear obra associada a la factura
@@ -90,9 +91,10 @@ class UserFixtures extends Fixture
                 $obra->setNom($faker->sentence(3));
                 $obra->setNumObraSeguiment($faker->unique()->numberBetween(1000, 9999));
                 $obra->setEstat($faker->boolean());
-                //$obra->setPseudonimClient($client->getPseudonim());
+                $obra->setPseudonimClient($client->getPseudonim());
                 $obra->setPortada($faker->imageUrl());
                 $obra->setFactura($factura);
+                $obra->setClient($client);
 
                 // Afegir referència a un arxiu fictici si és necessari
                 if ($this->hasReference('arxiu_' . $j)) {
