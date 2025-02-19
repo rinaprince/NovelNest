@@ -16,34 +16,21 @@ class FacturaType extends AbstractType
     {
         $builder
             ->add('tipus')
-            ->add('nom', EntityType::class, [
-                'class' => Obra::class,
-                'choice_label' => 'nom',
-                'multiple' => true,
-                'expanded' => false,
-                'mapped' => false,
-                'placeholder' => 'Selecciona una obra',
-            ])
             ->add('num_factura')
-            ->add('client', EntityType::class, [
-                'class' => Client::class,
-                'choice_label' => 'nom_usuari',
-                'placeholder' => 'Selecciona un cliente',
-            ])
-            ->add('cognom', EntityType::class, [
-                'class' => Client::class,
-                'choice_label' => 'cognom',
-                'mapped' => false,
-                'placeholder' => 'Selecciona un apellido',
-            ])
-            ->add('correu', EntityType::class, [
-                'class' => Client::class,
-                'choice_label' => 'correu',
-                'mapped' => false,
-                'placeholder' => 'Selecciona un correo',
-            ])
             ->add('preu')
             ->add('quantitat')
+            ->add('client', EntityType::class, [
+                'class' => Client::class,
+                'label' => 'client',
+                'choice_label' => 'nom',
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('obra', EntityType::class, [
+                'class' => Obra::class,
+                'label' => 'Obra',
+                'choice_label' => 'nom',
+                'attr' => ['class' => 'form-control'],
+            ])
         ;
     }
 
