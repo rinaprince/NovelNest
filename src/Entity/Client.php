@@ -35,11 +35,6 @@ class Client extends User implements \JsonSerializable
     )]
     private ?string $num_tarj = null;
 
-    #[ORM\ManyToOne(inversedBy: 'autor')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    #[Assert\NotNull(message: 'La factura no puede estar vacía.')]
-    private ?Factura $id_Factura = null;
-
     #[ORM\Column(length: 50, unique: true)]
     #[Assert\NotBlank(message: 'El pseudónimo no puede estar vacío.')]
     #[Assert\Length(
@@ -48,11 +43,15 @@ class Client extends User implements \JsonSerializable
     )]
     private ?string $pseudonim = null;
 
-    #[ORM\OneToMany(targetEntity: Obra::class, mappedBy: 'pseudonim_client')]
+    #[ORM\OneToMany(targetEntity: Factura::class, mappedBy: 'client')]
+    private Collection $factures;
+
+    #[ORM\OneToMany(targetEntity: Obra::class, mappedBy: 'client')]
     private Collection $obres;
 
     public function __construct()
     {
+        $this->factures = new ArrayCollection();
         $this->obres = new ArrayCollection();
     }
 
@@ -89,17 +88,6 @@ class Client extends User implements \JsonSerializable
         return $this;
     }
 
-    public function getIdFactura(): ?Factura
-    {
-        return $this->id_Factura;
-    }
-
-    public function setIdFactura(?Factura $id_Factura): static
-    {
-        $this->id_Factura = $id_Factura;
-        return $this;
-    }
-
     public function getPseudonim(): ?string
     {
         return $this->pseudonim;
@@ -111,6 +99,38 @@ class Client extends User implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return Collection<int, Factura>
+     */
+    public function getFactures(): Collection
+    {
+        return $this->factures;
+    }
+
+    public function addFactura(Factura $factura): static
+    {
+        if (!$this->factures->contains($factura)) {
+            $this->factures->add($factura);
+            $factura->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactura(Factura $factura): static
+    {
+        if ($this->factures->removeElement($factura)) {
+            if ($factura->getClient() === $this) {
+                $factura->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Obra>
+     */
     public function getObres(): Collection
     {
         return $this->obres;
@@ -120,7 +140,7 @@ class Client extends User implements \JsonSerializable
     {
         if (!$this->obres->contains($obra)) {
             $this->obres->add($obra);
-            $obra->setPseudonimClient($this);
+            $obra->setClient($this);
         }
 
         return $this;
@@ -129,8 +149,8 @@ class Client extends User implements \JsonSerializable
     public function removeObra(Obra $obra): static
     {
         if ($this->obres->removeElement($obra)) {
-            if ($obra->getPseudonimClient() === $this) {
-                $obra->setPseudonimClient(null);
+            if ($obra->getClient() === $this) {
+                $obra->setClient(null);
             }
         }
 
@@ -139,13 +159,13 @@ class Client extends User implements \JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-        return [
-            "id" => $this->getId(),
+        return array_merge(parent::jsonSerialize(), [
             "telef" => $this->getTelef(),
             "direccio" => $this->getDireccio(),
             "num_tarj" => $this->getNumTarj(),
-            "id_factura" => $this->getIdFactura()?->getId(),
             "pseudonim" => $this->getPseudonim(),
-        ];
+            "factures" => $this->getFactures()->map(fn(Factura $factura) => $factura->getId())->toArray(),
+            "obres" => $this->getObres()->map(fn(Obra $obra) => $obra->getId())->toArray(),
+        ]);
     }
 }

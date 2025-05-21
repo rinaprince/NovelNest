@@ -38,7 +38,7 @@ class ClientType extends AbstractType
             ->add('direccio')
             ->add('num_tarj')
             ->add('pseudonim')
-            ->add('id_Factura', EntityType::class, [
+            ->add('factura', EntityType::class, [
                 'class' => Factura::class,
                 'choice_label' => 'id',
                 'attr' => ['class' => 'd-none'],

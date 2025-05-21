@@ -25,11 +25,13 @@ class FacturaType extends AbstractType
                 'choice_label' => 'nom',
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('obra', EntityType::class, [
+            ->add('obres', EntityType::class, [
                 'class' => Obra::class,
                 'label' => 'Obra',
                 'choice_label' => 'nom',
                 'attr' => ['class' => 'form-control'],
+                'multiple' => true,
+                'expanded' => true,
             ])
         ;
     }

@@ -27,11 +27,11 @@ class Factura implements \JsonSerializable
     #[ORM\Column(type: "integer")]
     private ?int $quantitat = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(onDelete: "CASCADE")]
+    #[ORM\ManyToOne(inversedBy: 'facturas')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Client $client = null;
 
-    #[ORM\OneToMany(mappedBy: 'factura', targetEntity: Obra::class, cascade: ['remove'])]
+    #[ORM\OneToMany(targetEntity: Obra::class, mappedBy: 'factura')]
     private Collection $obres;
 
     public function __construct()
@@ -42,11 +42,6 @@ class Factura implements \JsonSerializable
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getObres(): Collection
-    {
-        return $this->obres;
     }
 
     public function getTipus(): ?string
@@ -94,9 +89,36 @@ class Factura implements \JsonSerializable
         return $this->client;
     }
 
-    public function setClient(?Client $client): void
+    public function setClient(?Client $client): static
     {
         $this->client = $client;
+        return $this;
+    }
+
+    public function getObres(): Collection
+    {
+        return $this->obres;
+    }
+
+    public function addObra(Obra $obra): static
+    {
+        if (!$this->obres->contains($obra)) {
+            $this->obres->add($obra);
+            $obra->setFactura($this);
+        }
+
+        return $this;
+    }
+
+    public function removeObra(Obra $obra): static
+    {
+        if ($this->obres->removeElement($obra)) {
+            if ($obra->getFactura() === $this) {
+                $obra->setFactura(null);
+            }
+        }
+
+        return $this;
     }
 
     public function jsonSerialize(): mixed

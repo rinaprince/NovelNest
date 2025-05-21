@@ -75,17 +75,7 @@ class UserFixtures extends Fixture
             // Crear entre 1 i 3 obres per a cada client
             $numObras = rand(1, 3);
             for ($j = 0; $j < $numObras; $j++) {
-                // Crear factura per a cada obra
-                $factura = new Factura();
-                $factura->setTipus($tipus);
-                $factura->setNumFactura($faker->unique()->numerify('FAC###'));
-                $factura->setPreu($faker->randomFloat(2, 10, 1000));
-                $factura->setQuantitat($faker->numberBetween(1, 100));
-                $factura->setClient($client);
-                $client->setIdFactura($factura);
-                $manager->persist($factura);
-
-                // Crear obra associada a la factura
+                // Crear obra
                 $obra = new Obra();
                 $obra->setTipus($tipus);
                 $obra->setNom($faker->sentence(3));
@@ -93,14 +83,23 @@ class UserFixtures extends Fixture
                 $obra->setEstat($faker->boolean());
                 $obra->setPseudonimClient($client->getPseudonim());
                 $obra->setPortada($faker->imageUrl());
-                $obra->setFactura($factura);
                 $obra->setClient($client);
 
-                // Afegir referència a un arxiu fictici si és necessari
+                //Afegir referèencia a un arxiu fictici si és necessari
                 if ($this->hasReference('arxiu_' . $j)) {
-                    $obra->setUrlArxiu($this->getReference('arxiu_' . $j));
+                    $obra->setUrlArxiu(($this->getReference('arxiu_'. $j)));
                 }
 
+                // Crear factura per a cada obra
+                $factura = new Factura();
+                $factura->setTipus($tipus);
+                $factura->setNumFactura($faker->unique()->numerify('FAC###'));
+                $factura->setPreu($faker->randomFloat(2, 10, 1000));
+                $factura->setQuantitat($faker->numberBetween(1, 100));
+                $factura->setClient($client);
+                $factura->addObra($obra);
+
+                $manager->persist($factura);
                 $manager->persist($obra);
             }
         }

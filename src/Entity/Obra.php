@@ -48,7 +48,7 @@ class Obra implements \JsonSerializable
     private ?Arxiu $url_arxiu = null;
 
     #[ORM\ManyToOne(inversedBy: 'obres')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Factura $factura = null;
 
     public function getId(): ?int
