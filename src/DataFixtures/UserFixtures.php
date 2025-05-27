@@ -81,7 +81,7 @@ class UserFixtures extends Fixture
                 $obra->setNom($faker->sentence(3));
                 $obra->setNumObraSeguiment($faker->unique()->numberBetween(1000, 9999));
                 $obra->setEstat($faker->boolean());
-                $obra->setPseudonimClient($client->getPseudonim());
+                $obra->setClient($client);
                 $obra->setPortada($faker->imageUrl());
                 $obra->setClient($client);
 

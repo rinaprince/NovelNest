@@ -62,7 +62,7 @@ class AutopublicacioController extends AbstractController
                         $obra->setEstat(false);
                         $obra->setPortada('');
                         $obra->setUrlArxiu($arxiu);
-                        $obra->setPseudonimClient($client);
+                        $obra->setClient($client);
 
                         // Factura asociada
                         $factura = $client->getIdFactura();
