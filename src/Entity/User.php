@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\InheritanceType("JOINED")]
 #[ORM\DiscriminatorColumn(name: "rol", type: "string")]
 #[ORM\DiscriminatorMap(["user" => User::class, "admin" => Administrador::class, "treballador" => Treballador::class, "client" => Client::class])]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSerializable
 {
     #[ORM\Id]

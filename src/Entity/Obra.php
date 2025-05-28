@@ -42,7 +42,7 @@ class Obra implements \JsonSerializable
     #[Assert\Url(message: "La portada debe ser una URL válida.")]
     private ?string $portada = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'num_Obra')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: "El archivo URL es obligatorio.")]
     private ?Arxiu $url_arxiu = null;

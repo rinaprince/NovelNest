@@ -45,16 +45,10 @@ class ObraType extends AbstractType
                 'class' => Client::class,
                 'choice_label' => 'pseudonim',
             ])
-            ->add('url_arxiu', FileType::class, [
+            ->add('url_arxiu', EntityType::class, [
+                'class' => Arxiu::class,
+                'choice_label' => 'nom_original', // o cualquier campo que quieras mostrar
                 'label' => 'Archivo PDF',
-                'mapped' => false,
-                'constraints' => [
-                    new File([
-                        'mimeTypes' => ['application/pdf'],
-                        'mimeTypesMessage' => 'Por favor, sube un archivo PDF válido.',
-                    ]),
-                ],
-                'required' => true, // Establece si el archivo es obligatorio o no
             ])
             ->add('factura', EntityType::class, [
                 'class' => Factura::class,

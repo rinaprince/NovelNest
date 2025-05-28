@@ -22,12 +22,12 @@ class Factura implements \JsonSerializable
     private ?string $num_factura = null;
 
     #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
-    private ?float $preu = null;
+    private ?string $preu = null;
 
     #[ORM\Column(type: "integer")]
     private ?int $quantitat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'facturas')]
+    #[ORM\ManyToOne(inversedBy: 'factures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $client = null;
 
@@ -130,7 +130,8 @@ class Factura implements \JsonSerializable
             "preu" => $this->preu,
             "quantitat" => $this->quantitat,
             "client" => $this->client?->getId(),
-            "obres" => $this->obres->map(fn($obra) => $obra->jsonSerialize())->toArray(),
+            // Només id per a evitar bucle
+            "obres" => array_map(fn($obra) => $obra->getId(), $this->obres->toArray()),
         ];
     }
 }

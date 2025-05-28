@@ -21,10 +21,7 @@ class Arxiu implements \JsonSerializable
     #[ORM\Column(length: 255)]
     private ?string $arxiu_portada = null;
 
-    /**
-     * @var Collection<int, Obra>
-     */
-    #[ORM\OneToMany(targetEntity: Obra::class, mappedBy: 'url_arxiu')]
+    #[ORM\OneToMany(mappedBy: 'url_arxiu', targetEntity: Obra::class)]
     private Collection $num_Obra;
 
     public function __construct()

@@ -35,12 +35,13 @@ class Client extends User implements \JsonSerializable
     )]
     private ?string $num_tarj = null;
 
-    #[ORM\Column(length: 50, unique: true)]
     #[Assert\NotBlank(message: 'El pseudónimo no puede estar vacío.')]
     #[Assert\Length(
         max: 50,
         maxMessage: 'El pseudónimo no puede tener más de 50 caracteres.'
     )]
+
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $pseudonim = null;
 
     #[ORM\OneToMany(targetEntity: Factura::class, mappedBy: 'client')]
@@ -164,8 +165,9 @@ class Client extends User implements \JsonSerializable
             "direccio" => $this->getDireccio(),
             "num_tarj" => $this->getNumTarj(),
             "pseudonim" => $this->getPseudonim(),
-            "factures" => $this->getFactures()->map(fn(Factura $factura) => $factura->getId())->toArray(),
-            "obres" => $this->getObres()->map(fn(Obra $obra) => $obra->getId())->toArray(),
+            // Mantenint els id per si a cas.
+            "factures" => [],
+            "obres" => [],
         ]);
     }
 }
