@@ -56,13 +56,13 @@ class ObraType extends AbstractType
                     ])
                 ]
             ])
-            ->add('pseudonim_client', EntityType::class, [
+            ->add('client', EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => 'pseudonim',
             ])
             ->add('url_arxiu', EntityType::class, [
                 'class' => Arxiu::class,
-                'choice_label' => 'nom_original', // o cualquier campo que quieras mostrar
+                'choice_label' => 'nom_original',
                 'label' => 'Archivo PDF',
             ])
             ->add('factura', EntityType::class, [

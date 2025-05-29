@@ -39,6 +39,7 @@
                         <th>Título</th>
                         <th class="d-none">NumObra_seguiment</th>
                         <th>Estado</th>
+                        <th>PDF</th>
                         <th class="d-none">Portada</th>
                         <th>Acciones</th>
                     </tr>
@@ -51,6 +52,15 @@
                             <td>{{ obra.nom }}</td>
                             <td class="d-none">{{ obra.numObraSeguiment }}</td>
                             <td>{{ obra.estat ? 'Entregat' : 'No entregat' }}</td>
+                            <td>
+                                {% if obra.getPdfPath() %}
+                                    <a href="{{ obra.getPdfPath() }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-file-earmark-pdf"></i> Ver PDF
+                                    </a>
+                                {% else %}
+                                    <span class="badge bg-warning">Sin PDF</span>
+                                {% endif %}
+                            </td>
                             <td class="d-none">{{ obra.portada }}</td>
                             <td class="d-flex justify-content-center">
                                 <a class="btn btn-success me-1" href="{{ path('app_obra_show', {'id': obra.id}) }}"><i

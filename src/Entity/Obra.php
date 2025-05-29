@@ -159,6 +159,19 @@ class Obra implements \JsonSerializable
         return $this;
     }
 
+    public function getPdfPath(): ?string
+    {
+        if ($this->url_arxiu && $this->url_arxiu->getArxiuPdf()) {
+            return '/uploads/pdf/' . $this->url_arxiu->getArxiuPdf();
+        }
+        return null;
+    }
+
+    public function __toString(): string
+    {
+        return $this->nom ?? 'Nueva Obra';
+    }
+
     public function getFactura(): ?Factura
     {
         return $this->factura;
