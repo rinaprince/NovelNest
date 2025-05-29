@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Arxiu;
 use App\Entity\Client;
 use App\Entity\Factura;
 use App\Entity\Obra;
@@ -11,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Validator\Constraints\File;
 
 class ObraType extends AbstractType
@@ -40,6 +42,19 @@ class ObraType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'attr' => ['accept' => 'image/*']
+            ])
+            ->add('portadaFile', VichFileType::class, [
+                'required' => false,
+                'allow_delete' => false,
+                'download_uri' => false,
+                'label' => 'Portada',
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2M',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
+                        'mimeTypesMessage' => 'Por favor, sube una imagen válida (JPEG, PNG o GIF).',
+                    ])
+                ]
             ])
             ->add('pseudonim_client', EntityType::class, [
                 'class' => Client::class,

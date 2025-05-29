@@ -82,7 +82,7 @@ class UserFixtures extends Fixture
                 $obra->setNumObraSeguiment($faker->unique()->numberBetween(1000, 9999));
                 $obra->setEstat($faker->boolean());
                 $obra->setClient($client);
-                $obra->setPortada($faker->imageUrl());
+                $obra->setPortada($faker->file('img', 'public/images/obres', false));
                 $obra->setClient($client);
 
                 //Afegir referèencia a un arxiu fictici si és necessari

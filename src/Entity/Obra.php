@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ObraRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: ObraRepository::class)]
 class Obra implements \JsonSerializable
@@ -41,6 +43,17 @@ class Obra implements \JsonSerializable
     #[ORM\Column(length: 255)]
     #[Assert\Url(message: "La portada debe ser una URL válida.")]
     private ?string $portada = null;
+
+    #[Vich\UploadableField(mapping: 'obres', fileNameProperty: 'portada')]
+    #[Assert\Image(
+        maxSize: '2M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/gif'],
+        mimeTypesMessage: 'Puja estos formats: jpeg, png, gif.'
+    )]
+    private ?File $portadaFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'num_Obra')]
     #[ORM\JoinColumn(nullable: false)]
@@ -120,6 +133,19 @@ class Obra implements \JsonSerializable
     {
         $this->portada = $portada;
         return $this;
+    }
+
+    public function getPortadaFile(): ?File
+    {
+        return $this->portadaFile;
+    }
+
+    public function setPortadaFile(?File $portadaFile = null): void
+    {
+        $this->portadaFile = $portadaFile;
+        if (null !== $portadaFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
     public function getUrlArxiu(): ?Arxiu

@@ -3,13 +3,13 @@
 {% block title %}Biblioteca{% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <h2 class=" fs-3 py-5">Biblioteca</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 class=" fs-3 py-5">Biblioteca</h2>
+            </div>
         </div>
     </div>
-</div>
 
     <div class="container pb-5">
         <div class="row">
@@ -29,8 +29,17 @@
     <div class="container">
         <div class="row">
             {% for obra in obres %}
-                <div class="col-4 mb-5 text-center">
+                <div class="col-md-4 col-lg-3 mb-5 text-center">
                     <div class="card h-100 shadow">
+                        {% if obra.portada %}
+                            <img src="{{ asset('/images/obres/' ~ obra.portada) | imagine_filter('obra_thumb') }}"
+                                 class="card-img-top"
+                                 alt="Portada de {{ obra.nom }}">
+                        {% else %}
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                            </div>
+                        {% endif %}
                         <div class="card-body">
                             <h3 class="fs-4 border-bottom border-black py-3">{{ obra.nom }}</h3>
                             <h4 class="card-text fs-5 py-3 text-rosa">Autor/a</h4>
