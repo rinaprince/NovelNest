@@ -16,18 +16,15 @@
         <div class="col-2 mb-5">
             {{ form_row(form.numObra_seguiment, {'label': 'Num. seg.'}) }}
         </div>
-        <div class="col-2 mb-5">
-            {{ form_row(form.factura, {'label': 'Factura'}) }}
+        <div class="col-6 mb-5">
+            {{ form_row(form.portadaFile, {'label': 'Portada (Imagen)'}) }}
         </div>
-        <div class="col-3 mb-5">
-            {{ form_row(form.portada, {'label': 'Portada', 'attr': {'class': 'form-control'}}) }}
-        </div>
-        <div class="col-3 mb-5">
-            {{ form_row(form.url_arxiu, {'label': 'Archivo', 'attr': {'class': 'form-control'}}) }}
+        <div class="col-6 mb-5">
+            {{ form_row(form.url_arxiu, {'label': 'Archivo PDF'}) }}
         </div>
     </div>
 </div>
-    {{ form_widget(form) }}
+{{ form_widget(form) }}
 <div class="container py-5">
     <div class="row">
         <div class="col-12">

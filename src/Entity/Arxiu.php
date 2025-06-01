@@ -21,6 +21,9 @@ class Arxiu implements \JsonSerializable
     #[ORM\Column(length: 255)]
     private ?string $arxiu_portada = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nom_original = null; // Nuevo campo para guardar el nombre original
+
     #[ORM\OneToMany(mappedBy: 'url_arxiu', targetEntity: Obra::class)]
     private Collection $num_Obra;
 
@@ -34,13 +37,6 @@ class Arxiu implements \JsonSerializable
         return $this->id;
     }
 
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
     public function getArxiuPdf(): ?string
     {
         return $this->arxiu_pdf;
@@ -49,7 +45,6 @@ class Arxiu implements \JsonSerializable
     public function setArxiuPdf(string $arxiu_pdf): static
     {
         $this->arxiu_pdf = $arxiu_pdf;
-
         return $this;
     }
 
@@ -61,7 +56,17 @@ class Arxiu implements \JsonSerializable
     public function setArxiuPortada(string $arxiu_portada): static
     {
         $this->arxiu_portada = $arxiu_portada;
+        return $this;
+    }
 
+    public function getNomOriginal(): ?string
+    {
+        return $this->nom_original;
+    }
+
+    public function setNomOriginal(?string $nom_original): static
+    {
+        $this->nom_original = $nom_original;
         return $this;
     }
 
@@ -79,27 +84,32 @@ class Arxiu implements \JsonSerializable
             $this->num_Obra->add($numObra);
             $numObra->setUrlArxiu($this);
         }
-
         return $this;
     }
 
     public function removeNumObra(Obra $numObra): static
     {
         if ($this->num_Obra->removeElement($numObra)) {
-            // set the owning side to null (unless already changed)
             if ($numObra->getUrlArxiu() === $this) {
                 $numObra->setUrlArxiu(null);
             }
         }
-
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->nom_original ?? $this->arxiu_pdf ?? 'Archivo sin nombre';
     }
 
     public function jsonSerialize(): mixed
     {
-        return ["id" => $this->getId(),
-            "arxiu_pdf"=> $this->getArxiuPdf(),
+        return [
+            "id" => $this->getId(),
+            "arxiu_pdf" => $this->getArxiuPdf(),
             "arxiu_portada" => $this->getArxiuPortada(),
-            "num_obra" => $this->getNumObra()];
+            "nom_original" => $this->getNomOriginal(),
+            "num_obra" => $this->getNumObra()->toArray()
+        ];
     }
 }

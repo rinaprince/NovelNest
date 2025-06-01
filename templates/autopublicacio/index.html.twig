@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="card-body">
-                        {% if accessDenied %}
+                        {% if accessDenied is defined and accessDenied %}
                             <div class="alert alert-danger alert-dismissible fade show">
                                 <strong>Error:</strong> No tienes permiso para ver este formulario. Debes iniciar sesión como cliente.
                                 <div class="mt-3">
@@ -61,7 +61,7 @@
                                             {% for client in clients %}
                                                 <option value="{{ client.id }}"
                                                         {{ (submittedData.client_id is defined and submittedData.client_id == client.id) ? 'selected' : '' }}>
-                                                    {{ client.nom }} {{ client.cognoms }}
+                                                    {{ client.nom }} {{ client.cognom }}
                                                 </option>
                                             {% endfor %}
                                         </select>

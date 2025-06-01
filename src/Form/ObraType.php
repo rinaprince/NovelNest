@@ -4,16 +4,13 @@ namespace App\Form;
 
 use App\Entity\Arxiu;
 use App\Entity\Client;
-use App\Entity\Factura;
 use App\Entity\Obra;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType;
-use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichFileType; // Mantenemos VichFileType
 
 class ObraType extends AbstractType
 {
@@ -26,50 +23,46 @@ class ObraType extends AbstractType
                     'Relato corto' => 'Relato corto',
                     'Poesía' => 'Poesía',
                 ],
-                'expanded' => false,
-                'multiple' => false,
+                'label' => 'Tipo de obra',
+                'attr' => ['class' => 'form-select']
             ])
-            ->add('nom')
-            ->add('numObra_seguiment')
+            ->add('nom', null, [
+                'label' => 'Nombre de la obra',
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('numObra_seguiment', null, [
+                'label' => 'Número de seguimiento',
+                'attr' => ['class' => 'form-control']
+            ])
             ->add('estat', ChoiceType::class, [
                 'choices' => [
                     'Entregado' => true,
                     'No entregado' => false,
                 ],
+                'label' => 'Estado',
+                'attr' => ['class' => 'form-select']
             ])
-            ->add('portada', FileType::class, [
-                'label' => 'Portada (Archivo)',
-                'required' => false,
-                'mapped' => false,
-                'attr' => ['accept' => 'image/*']
-            ])
-            ->add('portadaFile', VichFileType::class, [
+            ->add('portadaFile', VichFileType::class, [ // Mantenemos VichFileType
                 'required' => false,
                 'allow_delete' => false,
                 'download_uri' => false,
-                'label' => 'Portada',
-                'constraints' => [
-                    new File([
-                        'maxSize' => '2M',
-                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
-                        'mimeTypesMessage' => 'Por favor, sube una imagen válida (JPEG, PNG o GIF).',
-                    ])
-                ]
+                'label' => 'Portada (Imagen JPG/PNG)',
+                'attr' => ['accept' => 'image/jpeg,image/png']
             ])
             ->add('client', EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => 'pseudonim',
+                'label' => 'Cliente',
+                'attr' => ['class' => 'form-select']
             ])
             ->add('url_arxiu', EntityType::class, [
                 'class' => Arxiu::class,
                 'choice_label' => 'nom_original',
-                'label' => 'Archivo PDF',
-            ])
-            ->add('factura', EntityType::class, [
-                'class' => Factura::class,
-                'choice_label' => 'num_factura',
-            ])
-        ;
+                'label' => 'Archivo PDF asociado',
+                'attr' => ['class' => 'form-select'],
+                'placeholder' => 'Selecciona un archivo PDF existente',
+                'required' => false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

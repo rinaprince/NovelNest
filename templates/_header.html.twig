@@ -32,8 +32,12 @@
                 </ul>
             </div>
             <div class="me-5">
-                {% if app.user and is_granted('ROLE_CLIENT') %}
-                    <a class="btn btn-outline-dark" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right fs-5"></i> Salir</a>
+                {% if app.user %}
+                    {% if is_granted('ROLE_TREBALLADOR') %}
+                        <a class="btn btn-outline-dark" href="{{ path('app_home_back') }}"><i class="bi bi-gear-fill fs-5"></i> Administración</a>
+                    {% elseif is_granted('ROLE_CLIENT') %}
+                        <a class="btn btn-outline-dark" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right fs-5"></i> Salir</a>
+                    {% endif %}
                 {% else %}
                     <a class="btn btn-outline-dark" href="{{ path('app_login') }}"><i class="bi bi-person-circle"></i> Acceder</a>
                 {% endif %}
