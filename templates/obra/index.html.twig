@@ -31,19 +31,27 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header bg-blau-back text-white">
                         <h3 class="fs-5 mb-0 text-center">¡Empieza subiendo tu archivo PDF!</h3>
                     </div>
 
                     <div class="card-body">
-                        {% if mensaje %}
+                        {% if accessDenied %}
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <strong>Error:</strong> No tienes permiso para ver este formulario. Debes iniciar sesión como cliente.
+                                <div class="mt-3">
+                                    <a href="{{ path('app_login') }}" class="btn bg-blau me-2">Iniciar Sesión</a>
+                                    <a href="{{ path('app_register') }}" class="btn btn-outline-danger">Registrarse</a>
+                                </div>
+                            </div>
+                        {% elseif mensaje %}
                             <div class="alert alert-success alert-dismissible fade show">
                                 {{ mensaje }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         {% endif %}
 
-                        {% if showForm %}
+                        {% if showForm or accessDenied %}
                             <form method="post" enctype="multipart/form-data">
                                 {% if is_granted('ROLE_TREBALLADOR') %}
                                     <div class="mb-3">
@@ -52,7 +60,7 @@
                                             <option value="" selected disabled>-- Selecciona un cliente --</option>
                                             {% for client in clients %}
                                                 <option value="{{ client.id }}"
-                                                        {{ (app.request.request.get('client_id') == client.id) ? 'selected' : '' }}>
+                                                        {{ (submittedData.client_id is defined and submittedData.client_id == client.id) ? 'selected' : '' }}>
                                                     {{ client.nom }} {{ client.cognoms }}
                                                 </option>
                                             {% endfor %}
@@ -82,7 +90,7 @@
                                     <label for="nom" class="form-label">Título de la obra</label>
                                     <input type="text" name="nom" id="nom"
                                            class="form-control {{ formErrors.nom is defined ? 'is-invalid' : '' }}"
-                                           value="{{ app.request.request.get('nom') }}">
+                                           value="{{ submittedData.nom is defined ? submittedData.nom : '' }}">
                                     {% if formErrors.nom is defined %}
                                         <div class="invalid-feedback">
                                             {{ formErrors.nom }}
@@ -102,8 +110,7 @@
                                 <p>Los usuarios registrados como clientes o trabajadores pueden subir archivos PDF para autopublicación.</p>
                                 <hr>
                                 {% if not app.user %}
-                                    <a href="{{ path('app_login') }}" class="btn btn-primary">Iniciar Sesión</a>
-                                    <a href="{{ path('app_register') }}" class="btn btn-outline-primary">Registrarse</a>
+                                    <a href="{{ path('app_login') }}" class="btn bg-blau">Iniciar Sesión</a>
                                 {% endif %}
                             </div>
                         {% endif %}
@@ -117,7 +124,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header bg-blau-back text-white">
                         <h3 class="fs-5 mb-0 text-center">¡Elige tu maquetación!</h3>
                     </div>
                     <div class="card-body">
