@@ -9,11 +9,23 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType; // Mantenemos VichFileType
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ObraType extends AbstractType
 {
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -42,7 +54,7 @@ class ObraType extends AbstractType
                 'label' => 'Estado',
                 'attr' => ['class' => 'form-select']
             ])
-            ->add('portadaFile', VichFileType::class, [ // Mantenemos VichFileType
+            ->add('portadaFile', VichFileType::class, [
                 'required' => false,
                 'allow_delete' => false,
                 'download_uri' => false,
@@ -58,11 +70,43 @@ class ObraType extends AbstractType
             ->add('url_arxiu', EntityType::class, [
                 'class' => Arxiu::class,
                 'choice_label' => 'nom_original',
-                'label' => 'Archivo PDF asociado',
-                'attr' => ['class' => 'form-select'],
-                'placeholder' => 'Selecciona un archivo PDF existente',
-                'required' => false
+                'label' => 'Archivo PDF existente',
+                'placeholder' => 'Selecciona un archivo PDF existente (opcional)',
+                'required' => false,
+                'attr' => ['class' => 'form-select']
+            ])
+            ->add('nuevo_pdf', FileType::class, [
+                'label' => 'Subir nuevo archivo PDF',
+                'mapped' => false,
+                'required' => false,
+                'attr' => ['accept' => 'application/pdf'],
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['application/pdf'],
+                        'mimeTypesMessage' => 'Por favor, sube un archivo PDF válido.',
+                    ])
+                ]
             ]);
+
+        // Evento para asociar un nuevo archivo PDF subido
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+            /** @var Obra $obra */
+            $obra = $event->getData();
+            $form = $event->getForm();
+
+            $nuevoPdf = $form->get('nuevo_pdf')->getData();
+
+            if ($nuevoPdf) {
+                $arxiu = new Arxiu();
+                $arxiu->setArxiuPdf($nuevoPdf);
+                $arxiu->setNomOriginal($nuevoPdf->getClientOriginalName());
+                $this->em->persist($arxiu);
+                $this->em->flush();
+
+                $obra->setUrlArxiu($arxiu);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
