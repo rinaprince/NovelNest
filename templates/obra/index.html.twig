@@ -54,7 +54,7 @@
                             <td>{{ obra.estat ? 'Entregat' : 'No entregat' }}</td>
                             <td>
                                 {% if obra.getPdfPath() %}
-                                    <a href="{{ obra.getPdfPath() }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <a href="{{ asset(obra.urlArxiu) }}" target="_blank" class="btn btn-sm btn-outline-primary">
                                         <i class="bi bi-file-earmark-pdf"></i> Ver PDF
                                     </a>
                                 {% else %}
