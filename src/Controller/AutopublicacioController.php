@@ -72,7 +72,7 @@ class AutopublicacioController extends AbstractController
                     $arxiu = new Arxiu();
                     $arxiu->setArxiuPdf($pdfFileName);
                     $arxiu->setArxiuPortada('');
-                    $arxiu->setNomOriginal($pdfFile->getClientOriginalName()); // Guardar nombre original
+                    $arxiu->setNomOriginal($pdfFile->getClientOriginalName());
 
                     $errors = $validator->validate($arxiu);
                     if (count($errors) > 0) {
@@ -91,9 +91,13 @@ class AutopublicacioController extends AbstractController
                             $obra->setPortada('');
                             $obra->setUrlArxiu($arxiu);
                             $obra->setClient($client);
+                            $obra->setNumObraSeguiment(rand(1000, 9999));
 
-                            if ($client->getIdFactura()) {
-                                $obra->setFactura($client->getIdFactura());
+                            // Obtener la última factura del cliente si existe
+                            $facturas = $client->getFactures();
+                            if (!$facturas->isEmpty()) {
+                                $ultimaFactura = $facturas->last();
+                                $obra->setFactura($ultimaFactura);
                             }
 
                             $obraRepository->save($obra, true);

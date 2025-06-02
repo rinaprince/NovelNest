@@ -17,36 +17,11 @@ class ObraRepository extends ServiceEntityRepository
         parent::__construct($registry, Obra::class);
     }
 
-    //    /**
-    //     * @return Obra[] Returns an array of Obra objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('o.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Obra
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
     public function findAllQuery(): Query
     {
         return $this->createQueryBuilder('o')
             ->orderBy('o.id', 'ASC')
-            ->getQuery()
-            ;
+            ->getQuery();
     }
 
     public function findByTextQuery(string $value): Query
@@ -55,15 +30,14 @@ class ObraRepository extends ServiceEntityRepository
             ->andWhere('o.nom LIKE :val')
             ->setParameter('val', "%$value%")
             ->orderBy('o.id', 'ASC')
-            ->getQuery()
-            ;
+            ->getQuery();
     }
 
     public function save(Obra $obra, bool $flush = false): void
     {
-        $this->_em->persist($obra);
+        $this->getEntityManager()->persist($obra);
         if ($flush) {
-            $this->_em->flush();
+            $this->getEntityManager()->flush();
         }
     }
 }

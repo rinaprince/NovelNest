@@ -36,6 +36,25 @@
                     </div>
 
                     <div class="card-body">
+                        {% if mensaje %}
+                            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                                {{ mensaje }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                            </div>
+                        {% endif %}
+
+                        {% if formErrors is not empty %}
+                            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                                <strong>Se han producido errores:</strong>
+                                <ul class="mb-0 mt-2">
+                                    {% for error in formErrors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                            </div>
+                        {% endif %}
+
                         {% if accessDenied is defined and accessDenied %}
                             <div class="alert alert-danger alert-dismissible fade show">
                                 <strong>Error:</strong> No tienes permiso para ver este formulario. Debes iniciar sesión como cliente.
@@ -43,11 +62,6 @@
                                     <a href="{{ path('app_login') }}" class="btn btn-danger me-2">Iniciar Sesión</a>
                                     <a href="{{ path('app_register') }}" class="btn btn-outline-danger">Registrarse</a>
                                 </div>
-                            </div>
-                        {% elseif mensaje %}
-                            <div class="alert alert-success alert-dismissible fade show">
-                                {{ mensaje }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         {% endif %}
 
