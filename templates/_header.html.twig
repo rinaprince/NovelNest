@@ -29,6 +29,9 @@
                         <a class="nav-link {{ app.request.attributes.get('_route') == 'app_editors' ? 'active' : '' }}"
                            href="{{ path('app_editors') }}">Editores y editoras</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="btn btn-blau" href="{{ path('app_carrito') }}"> <i class="bi bi-cart2"></i>Carrito</a>
+                    </li>
                 </ul>
             </div>
             <div class="me-5">

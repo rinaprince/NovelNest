@@ -64,6 +64,20 @@ class Obra implements \JsonSerializable
     #[ORM\JoinColumn(nullable: true)]
     private ?Factura $factura = null;
 
+    #[ORM\Column(type: 'float')]
+    private float $preu;
+
+    public function getPreu(): ?float
+    {
+        return $this->preu;
+    }
+
+    public function setPreu(float $precio): self
+    {
+        $this->preu = $precio;
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -196,6 +210,7 @@ class Obra implements \JsonSerializable
             "portada" => $this->getPortada(),
             "url_arxiu" => $this->getUrlArxiu()?->getId(),
             "factura" => $this->getFactura()?->getId(),
+            "preu" => $this->getPreu(),
         ];
     }
 }
