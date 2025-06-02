@@ -36,8 +36,8 @@ class ArxiuFixtures extends Fixture
 
             // Crear Arxiu entidad
             $arxiu = new Arxiu();
-            $arxiu->setArxiuPdf('/uploads/pdf/' . $pdfFilename);
-            $arxiu->setArxiuPortada('/uploads/portades/portada' . $i . '.jpg');
+            $arxiu->setArxiuPdf($pdfFilename);
+            $arxiu->setArxiuPortada('uploads/portades/portada' . $i . '.jpg');
 
             $this->addReference('arxiu_' . $i, $arxiu);
             $manager->persist($arxiu);

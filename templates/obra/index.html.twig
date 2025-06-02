@@ -53,8 +53,9 @@
                             <td class="d-none">{{ obra.numObraSeguiment }}</td>
                             <td>{{ obra.estat ? 'Entregat' : 'No entregat' }}</td>
                             <td>
-                                {% if obra.getPdfPath() %}
-                                    <a href="{{ asset(obra.urlArxiu) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                {% set pdfPath = obra.getPdfPath() %}
+                                {% if pdfPath %}
+                                    <a href="{{ asset(pdfPath) }}" target="_blank" class="btn btn-sm btn-outline-primary">
                                         <i class="bi bi-file-earmark-pdf"></i> Ver PDF
                                     </a>
                                 {% else %}

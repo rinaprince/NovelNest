@@ -22,7 +22,7 @@ class Arxiu implements \JsonSerializable
     private ?string $arxiu_portada = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $nom_original = null; // Nuevo campo para guardar el nombre original
+    private ?string $nom_original = null;
 
     #[ORM\OneToMany(mappedBy: 'url_arxiu', targetEntity: Obra::class)]
     private Collection $num_Obra;
