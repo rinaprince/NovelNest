@@ -30,38 +30,45 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
+                <div class="card shadow mt-3">
+                    <div class="card-header bg-taronja text-white">
                         <h3 class="fs-5 mb-0 text-center">¡Empieza subiendo tu archivo PDF!</h3>
                     </div>
 
                     <div class="card-body">
-                        {% if mensaje %}
-                            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                                {{ mensaje }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                            </div>
-                        {% endif %}
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }} alert-dismissible fade show mt-3" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
 
-                        {% if formErrors is not empty %}
+                        {% if formErrors|length > 0 %}
                             <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                                <strong>Se han producido errores:</strong>
-                                <ul class="mb-0 mt-2">
-                                    {% for error in formErrors %}
-                                        <li>{{ error }}</li>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                    <strong>Se encontraron los siguientes errores:</strong>
+                                </div>
+                                <ul class="mb-0 mt-2 ps-4">
+                                    {% for field, error in formErrors %}
+                                        <li>
+                                            {% if field == 'pdf' %}
+                                                <strong>Archivo PDF:</strong> {{ error }}
+                                            {% elseif field == 'nom' %}
+                                                <strong>Título:</strong> {{ error }}
+                                            {% elseif field == 'paginas' %}
+                                                <strong>Páginas:</strong> {{ error }}
+                                            {% elseif field == 'client_id' %}
+                                                <strong>Cliente:</strong> {{ error }}
+                                            {% else %}
+                                                {{ error }}
+                                            {% endif %}
+                                        </li>
                                     {% endfor %}
                                 </ul>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                            </div>
-                        {% endif %}
-
-                        {% if accessDenied is defined and accessDenied %}
-                            <div class="alert alert-danger alert-dismissible fade show">
-                                <strong>Error:</strong> No tienes permiso para ver este formulario. Debes iniciar sesión como cliente.
-                                <div class="mt-3">
-                                    <a href="{{ path('app_login') }}" class="btn btn-danger me-2">Iniciar Sesión</a>
-                                    <a href="{{ path('app_register') }}" class="btn btn-outline-danger">Registrarse</a>
-                                </div>
                             </div>
                         {% endif %}
 
@@ -112,19 +119,38 @@
                                     {% endif %}
                                 </div>
 
-                                <div class="d-grid gap-2 mt-4">
-                                    <button type="submit" class="btn btn-primary btn-lg">
+                                <div class="mb-3 col-md-4">
+                                    <label for="paginas" class="form-label">Número de páginas</label>
+                                    <div class="input-group">
+                                        <input type="number"
+                                               class="form-control {{ formErrors.paginas is defined ? 'is-invalid' : '' }}"
+                                               id="paginas"
+                                               name="paginas"
+                                               min="1"
+                                               value="{{ submittedData.paginas is defined ? submittedData.paginas : '' }}">
+                                        <span class="input-group-text">págs.</span>
+                                    </div>
+                                    {% if formErrors.paginas is defined %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ formErrors.paginas }}
+                                        </div>
+                                    {% endif %}
+                                    <small class="form-text text-muted">El precio se calculará automáticamente (0.05€/pág)</small>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-rosa btn-lg">
                                         <i class="bi bi-upload me-2"></i>Subir PDF y Continuar
                                     </button>
                                 </div>
                             </form>
                         {% else %}
-                            <div class="alert alert-info text-center">
+                            <div class="alert alert-secondary text-center">
                                 <h4 class="alert-heading">Para subir archivos necesitas una cuenta</h4>
                                 <p>Los usuarios registrados como clientes o trabajadores pueden subir archivos PDF para autopublicación.</p>
                                 <hr>
                                 {% if not app.user %}
-                                    <a href="{{ path('app_login') }}" class="btn btn-primary">Iniciar Sesión</a>
+                                    <a href="{{ path('app_login') }}" class="btn btn-rosa">Iniciar sesión</a>
                                 {% endif %}
                             </div>
                         {% endif %}
@@ -136,17 +162,17 @@
 
     <div class="container my-5">
         <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
+            <div class="col-md-8">
+                <div class="card shadow mt-5">
+                    <div class="card-header bg-blau">
                         <h3 class="fs-5 mb-0 text-center">¡Elige tu maquetación!</h3>
                     </div>
                     <div class="card-body">
                         <div {{ vue_component('Autopubli_component') }}></div>
 
                         {% if showForm %}
-                            <div class="d-grid gap-2 mt-4">
-                                <a href="{{ path('app_dades') }}" class="btn btn-success btn-lg">
+                            <div class="text-center mt-4">
+                                <a href="{{ path('app_dades') }}" class="btn btn-warning btn-lg">
                                     <i class="bi bi-cart-check me-2"></i>Continuar con la compra
                                 </a>
                             </div>

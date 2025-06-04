@@ -27,6 +27,20 @@ class Arxiu implements \JsonSerializable
     #[ORM\OneToMany(mappedBy: 'url_arxiu', targetEntity: Obra::class)]
     private Collection $num_Obra;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $paginas;
+
+    public function getPaginas(): ?int
+    {
+        return $this->paginas;
+    }
+
+    public function setPaginas(?int $paginas): self
+    {
+        $this->paginas = $paginas;
+        return $this;
+    }
+
     public function __construct()
     {
         $this->num_Obra = new ArrayCollection();
