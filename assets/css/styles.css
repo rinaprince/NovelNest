@@ -45,7 +45,7 @@ h2{
 }
 
 /* Colors per a la web */
-
+ /* Fons */
 .bg-blau{
     background-color: #C2E0FF;
 }
@@ -57,6 +57,8 @@ h2{
 .bg-taronja{
     background-color: #FB8674;
 }
+
+ /* Text */
 
 .text-blau{
     color: #C2E0FF;
@@ -74,7 +76,7 @@ h2{
     color: #FDAFBF;
 }
 
-/* Esils propis */
+ /* Botons */
 .btn-rosa{
     color: #000000;
     background-color: #FDAFBF;
@@ -99,6 +101,7 @@ h2{
     border-color: #6A85B4;
 }
 
+ /* Links */
 .link-rosa{
     color: #FDAFBF;
     text-decoration: none;
@@ -116,6 +119,13 @@ h2{
 
 .link-blau-oscur:hover{
     color: #3b6db5;
+}
+
+ /* Botons tables */
+.btn-green{
+    color: #000000;
+    background-color: #9cca92;
+    border-color: #9cca92;
 }
 
 /* Home */

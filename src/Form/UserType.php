@@ -18,7 +18,7 @@ class UserType extends AbstractType
             ->add('contrasenya', PasswordType::class, [
                 'label' => 'Contraseña',
                 'attr' => ['class' => 'form-control'],
-                'required' => false,
+                'required' => true,
                 'mapped' => false,
             ])
             ->add('nom')

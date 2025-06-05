@@ -72,7 +72,7 @@
                             </div>
                         {% endif %}
 
-                        {% if showForm or accessDenied %}
+                        {% if showForm %}
                             <form method="post" enctype="multipart/form-data">
                                 {% if is_granted('ROLE_TREBALLADOR') %}
                                     <div class="mb-3">
