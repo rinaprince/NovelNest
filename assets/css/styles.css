@@ -121,13 +121,6 @@ h2{
     color: #3b6db5;
 }
 
- /* Botons tables */
-.btn-green{
-    color: #000000;
-    background-color: #9cca92;
-    border-color: #9cca92;
-}
-
 /* Home */
 .logo{
     background-image: url("../css/img/logo.png");

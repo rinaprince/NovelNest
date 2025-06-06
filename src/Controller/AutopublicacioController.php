@@ -125,7 +125,7 @@ class AutopublicacioController extends AbstractController
 
                     $carrito = new Carrito();
                     $carrito->setUsuariCompra($client->getNom() . ' ' . $client->getCognom());
-                    $carrito->setObra($obra->getNom());
+                    $carrito->setObra($obra);
                     $carrito->setDataCreacio(new \DateTime());
                     $carrito->setQuantitat(1);
                     $carrito->setPreu($preu);

@@ -88,15 +88,6 @@
                                 Proceder al pago <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
-                    {% else %}
-                        <div class="alert alert-primary">
-                            {% if isClient %}
-                                Tu carrito está vacío. <a href="{{ path('app_biblioteca') }}">Explora nuestra biblioteca</a>
-                                para añadir obras o <a href="{{ path('app_autopublicacio') }}">autopublica</a>.
-                            {% else %}
-                                No tienes permisos para ver el carrito. Debes ser cliente.
-                            {% endif %}
-                        </div>
                     {% endif %}
                 </div>
             </div>

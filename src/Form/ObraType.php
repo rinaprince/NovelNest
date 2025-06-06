@@ -67,14 +67,6 @@ class ObraType extends AbstractType
                 'label' => 'Cliente',
                 'attr' => ['class' => 'form-select']
             ])
-            ->add('url_arxiu', EntityType::class, [
-                'class' => Arxiu::class,
-                'choice_label' => 'nom_original',
-                'label' => 'Archivo PDF existente',
-                'placeholder' => 'Selecciona un archivo PDF existente (opcional)',
-                'required' => false,
-                'attr' => ['class' => 'form-select']
-            ])
             ->add('nuevo_pdf', FileType::class, [
                 'label' => 'Subir nuevo archivo PDF',
                 'mapped' => false,

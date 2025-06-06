@@ -84,6 +84,7 @@ class UserFixtures extends Fixture
                 $obra->setClient($client);
                 $obra->setPortada($faker->file('img', 'public/images/obres', false));
                 $obra->setClient($client);
+                $obra->setPreu(15.00);
 
                 //Afegir referèencia a un arxiu fictici si és necessari
                 if ($this->hasReference('arxiu_' . $j)) {

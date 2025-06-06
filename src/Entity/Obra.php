@@ -46,7 +46,7 @@ class Obra implements \JsonSerializable
 
     #[Vich\UploadableField(mapping: 'obres', fileNameProperty: 'portada')]
     #[Assert\Image(
-        maxSize: '2M',
+        //maxSize: '2M',
         mimeTypes: ['image/jpeg', 'image/png', 'image/gif'],
         mimeTypesMessage: 'Puja estos formats: jpeg, png, gif.'
     )]

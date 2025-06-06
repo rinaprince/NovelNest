@@ -3,8 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Client;
-use App\Entity\Factura;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -20,7 +18,7 @@ class ClientType extends AbstractType
             ->add('contrasenya', PasswordType::class, [
                 'label' => 'Contraseña',
                 'attr' => ['class' => 'form-control'],
-                'required' => false,
+                'required' => true,
                 'mapped' => false,
             ])
             ->add('nom')

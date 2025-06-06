@@ -17,8 +17,9 @@ class Carrito
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $usuariCompra = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $obra = null;
+    #[ORM\ManyToOne(targetEntity: Obra::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Obra $obra = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $data_creacio = null;
@@ -46,12 +47,12 @@ class Carrito
         return $this;
     }
 
-    public function getObra(): ?string
+    public function getObra(): ?Obra
     {
         return $this->obra;
     }
 
-    public function setObra(?string $obra): static
+    public function setObra(?Obra $obra): static
     {
         $this->obra = $obra;
 

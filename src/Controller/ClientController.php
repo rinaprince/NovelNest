@@ -41,13 +41,20 @@ final class ClientController extends AbstractController
     }
 
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('contrasenya')->getData();
+
+            if (!empty($plainPassword)) {
+                $hashedPassword = $passwordHasher->hashPassword($client, $plainPassword);
+                $client->setContrasenya($hashedPassword);
+            }
+
             $entityManager->persist($client);
             $entityManager->flush();
 
@@ -85,6 +92,8 @@ final class ClientController extends AbstractController
                 //Hashear i assignar la nova contr. si s'assigna
                 $hashedPassword = $passwordHasher->hashPassword($client, $newPassword);
                 $client->setContrasenya($hashedPassword);
+            } else {
+                $client->setContrasenya($currentPassword);
             }
 
             $entityManager->flush();

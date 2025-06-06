@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Carrito;
 use App\Repository\CarritoRepository;
 use App\Repository\ObraRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,30 +13,27 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CarritoController extends AbstractController
 {
-
     #[Route('/carrito', name: 'app_carrito')]
-    public function index(CarritoRepository $carritoRepository, ObraRepository $obraRepository): Response
+    public function index(Request $request, CarritoRepository $carritoRepository): Response
     {
         $user = $this->getUser();
-        $itemsWithDetails = [];
-        $total = 0;
-        $isClient = $this->isGranted('ROLE_CLIENT');
+        $session = $request->getSession();
 
-        if (!$isClient) {
-            $this->addFlash('error', 'Debes ser cliente para acceder al carrito.');
-            return $this->render('carrito/index.html.twig', [
-                'items' => [],
-                'total' => 0,
-                'isClient' => false,
-            ]);
+        if (!$session->isStarted()) {
+            $session->start();
         }
 
-        // Buscar por nombre + apellido del usuario actual
-        $userIdentifier = $user->getNom() . ' ' . $user->getCognom();
+        $userIdentifier = $user
+            ? $user->getNom() . ' ' . $user->getCognom()
+            : 'anonimo_' . $session->getId();
+
         $carritoItems = $carritoRepository->findBy(['usuariCompra' => $userIdentifier]);
 
+        $itemsWithDetails = [];
+        $total = 0;
+
         foreach ($carritoItems as $item) {
-            $obra = $obraRepository->findOneBy(['nom' => $item->getObra()]);
+            $obra = $item->getObra();
             if ($obra) {
                 $itemsWithDetails[] = [
                     'id' => $item->getId(),
@@ -43,8 +41,8 @@ class CarritoController extends AbstractController
                     'obra' => $obra,
                     'cantidad' => $item->getQuantitat(),
                     'precio' => $item->getPreu(),
-                    'paginas' => $obra->getUrlArxiu()->getPaginas(),
-                    'usuario' => $obra->getClient()->getNom() . ' ' . $obra->getClient()->getCognom()
+                    'paginas' => $obra->getUrlArxiu()?->getPaginas(),
+                    'usuario' => $obra->getClient()?->getNom() . ' ' . $obra->getClient()?->getCognom()
                 ];
                 $total += $item->getPreu() * $item->getQuantitat();
             }
@@ -53,25 +51,82 @@ class CarritoController extends AbstractController
         return $this->render('carrito/index.html.twig', [
             'items' => $itemsWithDetails,
             'total' => $total,
-            'isClient' => true,
+            'isClient' => $user && $this->isGranted('ROLE_CLIENT'),
         ]);
     }
 
-    #[Route('/carrito/remove/{id}', name: 'app_carrito_remove')]
-    public function remove(int $id, CarritoRepository $carritoRepository, EntityManagerInterface $entityManager): Response
-    {
-        $item = $carritoRepository->find($id);
+    #[Route('/carrito/add/{id}', name: 'app_carrito_add')]
+    public function addFromBiblioteca(
+        int $id,
+        ObraRepository $obraRepository,
+        CarritoRepository $carritoRepository,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response {
+        $obra = $obraRepository->find($id);
+        if (!$obra) {
+            $this->addFlash('error', 'Obra no encontrada.');
+            return $this->redirectToRoute('app_biblioteca');
+        }
 
+        $user = $this->getUser();
+        $session = $request->getSession();
+
+        if (!$session->isStarted()) {
+            $session->start();
+        }
+
+        $userIdentifier = $user
+            ? $user->getNom() . ' ' . $user->getCognom()
+            : 'anonimo_' . $session->getId();
+
+        $existingItem = $carritoRepository->findOneBy([
+            'obra' => $obra,
+            'usuariCompra' => $userIdentifier,
+        ]);
+
+        if ($existingItem) {
+            $existingItem->setQuantitat($existingItem->getQuantitat() + 1);
+        } else {
+            $carritoItem = new Carrito();
+            $carritoItem->setObra($obra);
+            $carritoItem->setUsuariCompra($userIdentifier);
+            $carritoItem->setQuantitat(1);
+            $carritoItem->setDataCreacio(new \DateTime());
+            $carritoItem->setPreu(15.0);
+            $entityManager->persist($carritoItem);
+        }
+
+        $entityManager->flush();
+        $this->addFlash('success', 'Obra añadida al carrito.');
+        return $this->redirectToRoute('app_biblioteca');
+    }
+
+    #[Route('/carrito/remove/{id}', name: 'app_carrito_remove')]
+    public function remove(
+        int $id,
+        CarritoRepository $carritoRepository,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response {
+        $item = $carritoRepository->find($id);
         if (!$item) {
             throw $this->createNotFoundException('El item no existe en el carrito');
         }
 
-        // Verificar que el item pertenece al usuario actual
         $user = $this->getUser();
-        $userIdentifier = $user->getNom() . ' ' . $user->getCognom();
+        $session = $request->getSession();
+
+        if (!$session->isStarted()) {
+            $session->start();
+        }
+
+        $userIdentifier = $user
+            ? $user->getNom() . ' ' . $user->getCognom()
+            : 'anonimo_' . $session->getId();
 
         if ($item->getUsuariCompra() !== $userIdentifier) {
-            throw $this->createAccessDeniedException('No tienes permiso para eliminar este item');
+            throw $this->createAccessDeniedException('No tienes permiso para modificar este item');
         }
 
         $entityManager->remove($item);
@@ -82,28 +137,35 @@ class CarritoController extends AbstractController
     }
 
     #[Route('/carrito/update/{id}', name: 'app_carrito_update')]
-    public function update(int $id, Request $request, CarritoRepository $carritoRepository, EntityManagerInterface $entityManager): Response
-    {
+    public function update(
+        int $id,
+        Request $request,
+        CarritoRepository $carritoRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
         $item = $carritoRepository->find($id);
-
         if (!$item) {
             throw $this->createNotFoundException('El item no existe en el carrito');
         }
 
-        // Verificar que el item pertenece al usuario actual
         $user = $this->getUser();
-        $userIdentifier = $user->getNom() . ' ' . $user->getCognom();
+        $session = $request->getSession();
+
+        if (!$session->isStarted()) {
+            $session->start();
+        }
+
+        $userIdentifier = $user
+            ? $user->getNom() . ' ' . $user->getCognom()
+            : 'anonimo_' . $session->getId();
 
         if ($item->getUsuariCompra() !== $userIdentifier) {
             throw $this->createAccessDeniedException('No tienes permiso para modificar este item');
         }
 
-        $cantidad = (int)$request->request->get('cantidad', 1);
-        if ($cantidad < 1) {
-            $cantidad = 1;
-        }
-
+        $cantidad = max((int) $request->request->get('cantidad', 1), 1);
         $item->setQuantitat($cantidad);
+
         $entityManager->flush();
 
         $this->addFlash('success', 'Cantidad actualizada');

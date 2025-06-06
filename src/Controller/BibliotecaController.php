@@ -17,15 +17,25 @@ class BibliotecaController extends AbstractController
         /* Paginador i cercador */
         $q = $request->query->get('q', '');
 
-        if (empty($q))
-            $query = $obraRepository->findAllQuery();
-        else
+        if (empty($q)) {
+            $queryBuilder = $obraRepository->createQueryBuilder('o')
+                ->andWhere('o.estat = :estat')
+                ->setParameter('estat', true)
+                ->orderBy('o.id', 'ASC');
+            $query = $queryBuilder->getQuery();
+        } else {
             $query = $obraRepository->findByTextQuery($q);
+            $dql = $query->getDQL() . ' AND o.estat = :estat';
+            $query = $obraRepository->getEntityManager()
+                ->createQuery($dql)
+                ->setParameter('val', "%$q%")
+                ->setParameter('estat', true);
+        }
 
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            15
+            10
         );
 
         return $this->render('biblioteca/index.html.twig', [
